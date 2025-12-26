@@ -4,7 +4,7 @@ import pandas as pd
 import xarray as xr
 import numpy as np
 
-from planner import Asset, Recipe, DataAsset, inject, assets
+from planner import Asset, Recipe, DataAsset, inject
 from ._utils import _as_fixed_str
 from .frequencies import FrequenciesAsset
 

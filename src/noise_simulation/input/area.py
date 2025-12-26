@@ -3,7 +3,7 @@ import pyproj
 from typing import override
 from dataclasses import dataclass
 
-from planner import Asset, Recipe, DataAsset, inject, assets
+from planner import Asset, Recipe, DataAsset, inject
 from ..config import area_specs, ConfigAsset
 from .area_of_interest import AreaOfInterestAsset
 from .working_crs import WorkingCrsAsset

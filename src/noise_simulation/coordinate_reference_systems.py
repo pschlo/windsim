@@ -56,7 +56,7 @@ def parse_name(name: str):
         'wgs84': CRS.WGS84,
         'web_mercator': CRS.WEB_MERCATOR,
         'spherical_mercator': CRS.SPHERICAL_MERCATOR,
-        'pseudo_mercator': CRS.PSEUDO_MERCA6TOR,
+        'pseudo_mercator': CRS.PSEUDO_MERCATOR,
         'world_mercator': CRS.WORLD_MERCATOR
     }
     if _name in crs_mapping:

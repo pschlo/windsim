@@ -8,7 +8,7 @@ from datetime import datetime
 from contextlib import contextmanager
 import time
 
-from planner import Asset, Recipe, DataAsset, inject, assets
+from planner import Asset, Recipe, DataAsset, inject
 from ..input import assets as noise_assets
 from ..model import NoiseSimulationAsset
 from . import plotting

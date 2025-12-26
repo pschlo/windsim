@@ -2,7 +2,7 @@ import logging
 from typing import override, cast
 import xarray as xr
 
-from planner import Asset, Recipe, DataAsset, inject, assets
+from planner import Asset, Recipe, DataAsset, inject
 from ..config import ConfigAsset
 
 

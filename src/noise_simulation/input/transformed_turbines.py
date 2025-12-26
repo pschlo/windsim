@@ -5,7 +5,7 @@ import xarray as xr
 import numpy as np
 from contextlib import contextmanager
 
-from planner.assets import Asset, Recipe, DataAsset, inject, assets
+from planner import Asset, Recipe, DataAsset, inject
 from noise_simulation.coordinate_reference_systems import CRS
 
 from .raw_turbines import RawTurbinesAsset

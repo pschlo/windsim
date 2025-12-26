@@ -2,7 +2,7 @@ import logging
 from typing import override, cast
 import xarray as xr
 
-from planner import Asset, Recipe, DataAsset, inject, assets
+from planner import Asset, Recipe, DataAsset, inject
 from .full_turbines import FullTurbinesAsset
 from .turbine_types import MyTurbineTypesAsset
 from .timeslice_durations import TimesliceDurationsAsset

@@ -14,7 +14,6 @@ from shapely import GeometryCollection, MultiPolygon, Polygon
 from shapely.geometry import shape
 from trimesh import Trimesh
 
-from planner import assets
 from ..config import ConfigData
 
 
@@ -68,16 +67,17 @@ def _as_dtype(
         return obj
 
 
-def environment(asset: assets.GisObjectsJson, working_crs: pyproj.CRS) -> xr.Dataset:
-    df = gpd.GeoDataFrame(asset.data)
-    # set lat/long
-    df['geometry_wgs'] = gpd.GeoSeries(df["geometry"].apply(shape), crs=CRS.WGS84)  # type: ignore
-    df.drop(columns=["latitude", "longitude"], inplace=True)
-    # set working CRS
-    df['geometry'] = cast(gpd.GeoSeries, df['geometry_wgs']).to_crs(working_crs)
-    df.set_geometry('geometry', inplace=True)
+# def environment(asset: assets.GisObjectsJson, working_crs: pyproj.CRS) -> xr.Dataset:
+#     """Create environment description from JSON"""
+#     df = gpd.GeoDataFrame(asset.data)
+#     # set lat/long
+#     df['geometry_wgs'] = gpd.GeoSeries(df["geometry"].apply(shape), crs=CRS.WGS84)  # type: ignore
+#     df.drop(columns=["latitude", "longitude"], inplace=True)
+#     # set working CRS
+#     df['geometry'] = cast(gpd.GeoSeries, df['geometry_wgs']).to_crs(working_crs)
+#     df.set_geometry('geometry', inplace=True)
     
-    return xr.Dataset.from_dataframe(df)
+#     return xr.Dataset.from_dataframe(df)
 
 
 def layout(environment: xr.Dataset, *, config: ConfigData) -> tuple[MultiPolygon, list[float]]:

@@ -4,7 +4,7 @@ from typing import override
 import xarray as xr
 from pathlib import Path
 
-from planner import Asset, Recipe, inject, DataAsset, assets
+from planner import Asset, Recipe, inject, DataAsset
 from .area import AreaAsset
 from .chunksize import ChunksizeAsset
 from .working_crs import WorkingCrsAsset

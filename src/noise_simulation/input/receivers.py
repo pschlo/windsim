@@ -3,7 +3,7 @@ import numpy as np
 import logging
 from typing import override
 
-from planner import Asset, Recipe, DataAsset, inject, assets
+from planner import Asset, Recipe, DataAsset, inject
 from .receiver_groups import ReceiverGroupsAsset
 
 

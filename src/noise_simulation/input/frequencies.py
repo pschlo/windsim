@@ -2,7 +2,7 @@ import numpy as np
 import logging
 from typing import override
 
-from planner import Asset, Recipe, DataAsset, inject, assets
+from planner import Asset, Recipe, DataAsset, inject
 from noise_simulation.coordinate_reference_systems import CRS
 
 

@@ -2,7 +2,7 @@ import logging
 from typing import override
 import os
 
-from planner import Asset, Recipe, DataAsset, inject, assets
+from planner import Asset, Recipe, DataAsset, inject
 from ..config import chunksize_specs, ConfigAsset
 from .area import AreaAsset
 

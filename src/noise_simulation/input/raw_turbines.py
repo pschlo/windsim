@@ -5,7 +5,7 @@ import xarray as xr
 import numpy as np
 from contextlib import contextmanager
 
-from planner import Asset, Recipe, DataAsset, inject, assets
+from planner import Asset, Recipe, DataAsset, inject
 from .turbine_types import MyTurbineTypesAsset
 from ._utils import _as_fixed_str
 from ..config import ConfigAsset

@@ -3,7 +3,7 @@ from typing import override
 import xarray as xr
 from contextlib import contextmanager
 
-from planner import Asset, Recipe, DataAsset, inject, assets
+from planner import Asset, Recipe, DataAsset, inject
 from .transformed_turbines import TransformedTurbinesAsset
 from .chunksize import ChunksizeAsset
 from .elevation import ElevationAsset

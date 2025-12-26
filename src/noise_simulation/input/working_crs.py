@@ -3,7 +3,7 @@ import pyproj.database
 import logging
 from typing import override, cast
 
-from planner import Asset, Recipe, DataAsset, inject, assets
+from planner import Asset, Recipe, DataAsset, inject
 from ..config import ConfigAsset, crs_specs
 from .area_of_interest import AreaOfInterestAsset
 

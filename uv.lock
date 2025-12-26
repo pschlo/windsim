@@ -1781,8 +1781,8 @@ wheels = [
 
 [[package]]
 name = "planner"
-version = "1.0.0"
-source = { git = "https://github.com/pschlo/planner#102410c80d0aef43b561739e0d82fbe311d0db5a" }
+version = "1.0.1"
+source = { git = "https://github.com/pschlo/planner#f443e53068b8e4556b7fc1bfca9ec1a19746f385" }
 dependencies = [
     { name = "matplotlib" },
     { name = "networkx" },
