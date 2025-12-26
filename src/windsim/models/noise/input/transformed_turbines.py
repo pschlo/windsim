@@ -6,7 +6,7 @@ import numpy as np
 from contextlib import contextmanager
 
 from planner import Asset, Recipe, DataAsset, inject
-from noise_simulation.coordinate_reference_systems import CRS
+from windsim.coordinate_reference_systems import CRS
 
 from .raw_turbines import RawTurbinesAsset
 from .working_crs import WorkingCrsAsset

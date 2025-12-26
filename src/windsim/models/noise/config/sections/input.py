@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from noise_simulation.coordinate_reference_systems import CRS, parse_name as parse_crs_name
+from windsim.coordinate_reference_systems import CRS, parse_name as parse_crs_name
 from .. import area_specs
 from ..exceptions import ConfigError
 from ._abstract import Section

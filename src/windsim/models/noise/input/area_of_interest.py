@@ -4,7 +4,7 @@ from typing import override
 from dataclasses import dataclass
 
 from planner import Asset, Recipe, inject, DataAsset
-from noise_simulation.coordinate_reference_systems import CRS
+from windsim.coordinate_reference_systems import CRS
 
 from .raw_turbines import RawTurbinesAsset
 from ..config import area_specs, ConfigAsset

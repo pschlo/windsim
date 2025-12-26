@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 from typing import Any, Literal, TypedDict, cast
 
-from noise_simulation.coordinate_reference_systems import parse_name as parse_crs_name
+from windsim.coordinate_reference_systems import parse_name as parse_crs_name
 from .. import chunksize_specs, crs_specs
 from ..exceptions import ConfigError
 from ._abstract import Section

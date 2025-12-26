@@ -1,9 +1,9 @@
 from pathlib import Path
 from planner import Planner, StaticRecipe, RecipeBundle
 
-from . import assets as noise_assets
+from .. import assets as noise_assets
 from .config import Config
-from . import assets as noise_assets, recipes as noise_recipes
+from .. import assets as noise_assets, recipes as noise_recipes
 
 
 RECIPE_BUNDLE = RecipeBundle([

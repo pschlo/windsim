@@ -28,8 +28,8 @@ from shapely import LinearRing, MultiPolygon, Point, Polygon
 from shapely.plotting import plot_polygon
 
 from ..config import ConfigData
-from noise_simulation.coordinate_reference_systems import CRS
-from noise_simulation.verification.verify_iso_lines import compare_contours
+from windsim.coordinate_reference_systems import CRS
+from windsim.verification.verify_iso_lines import compare_contours
 from ..input.area import Area
 from .framed_scalebar import FramedScaleBar
 

@@ -3,7 +3,7 @@ import logging
 from typing import override
 
 from planner import Asset, Recipe, DataAsset, inject
-from noise_simulation.coordinate_reference_systems import CRS
+from windsim.coordinate_reference_systems import CRS
 
 
 log = logging.getLogger(__name__)
