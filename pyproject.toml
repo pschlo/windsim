@@ -1,0 +1,30 @@
+[project]
+name = "noise-simulation"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "cartopy>=0.25.0",
+    "contextily>=1.7.0",
+    "dask[array,complete,dataframe,diagnostics,distributed]>=2025.12.0",
+    "geopandas>=1.1.2",
+    "graphviz>=0.21",
+    "matplotlib>=3.10.8",
+    "matplotlib-scalebar>=0.9.0",
+    "numpy>=2.3.5",
+    "pandas>=2.3.3",
+    "planner",
+    "pyproj>=3.7.2",
+    "pyrender>=0.1.45",
+    "rioxarray>=0.20.0",
+    "scipy>=1.16.3",
+    "shapely>=2.1.2",
+    "toml>=0.10.2",
+    "triangle>=20250106",
+    "trimesh[easy,recommend]>=4.10.1",
+    "xarray[accel,io,parallel,viz]>=2025.12.0",
+]
+
+[tool.uv.sources]
+planner = { git = "https://github.com/pschlo/planner" }
