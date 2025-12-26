@@ -7,8 +7,10 @@ import time
 from dataclasses import dataclass
 
 from planner import Asset, Recipe, inject, DataAsset
-from windsim.input import assets as _na
-from windsim.computation import iso9613 as iso
+
+from windsim import assets as common_assets
+from windsim.models.noise.input import assets as _na
+from windsim.models.noise.computation import iso9613 as iso
 from .config import ConfigAsset
 
 

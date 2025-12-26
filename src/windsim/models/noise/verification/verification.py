@@ -4,6 +4,8 @@ import contextily as ctx
 import geopandas as gpd
 import matplotlib.pyplot as plt
 
+from windsim.models.noise.config import Config
+
 
 config = Config.load().data
 

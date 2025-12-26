@@ -1,9 +1,11 @@
 from pathlib import Path
+
 from planner import Planner, StaticRecipe, RecipeBundle
 
-from .. import assets as noise_assets
+from windsim import assets as common_assets, recipes as common_recipes
+from windsim.models.noise import assets as noise_assets, recipes as noise_recipes
+
 from .config import Config
-from .. import assets as noise_assets, recipes as noise_recipes
 
 
 RECIPE_BUNDLE = RecipeBundle([

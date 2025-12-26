@@ -5,6 +5,9 @@ import xarray as xr
 from pathlib import Path
 
 from planner import Asset, Recipe, inject, DataAsset
+
+from windsim import assets
+
 from .area import AreaAsset
 from .chunksize import ChunksizeAsset
 from .working_crs import WorkingCrsAsset

@@ -5,6 +5,9 @@ import xarray as xr
 import numpy as np
 
 from planner import Asset, Recipe, DataAsset, inject
+
+from windsim import assets
+
 from ._utils import _as_fixed_str
 from .frequencies import FrequenciesAsset
 

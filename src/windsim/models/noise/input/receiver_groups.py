@@ -9,6 +9,8 @@ import dask.array.creation as da_creation
 import dask.array.wrap as da_wrap
 
 from planner import Recipe, DataAsset, inject
+
+from windsim import assets
 from windsim.coordinate_reference_systems import CRS
 
 from .elevation import ElevationAsset

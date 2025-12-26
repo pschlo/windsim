@@ -27,11 +27,13 @@ from matplotlib_scalebar.scalebar import ScaleBar
 from shapely import LinearRing, MultiPolygon, Point, Polygon
 from shapely.plotting import plot_polygon
 
-from ..config import ConfigData
 from windsim.coordinate_reference_systems import CRS
-from windsim.verification.verify_iso_lines import compare_contours
+from windsim.models.noise.verification.verify_iso_lines import compare_contours
+
+from ..config import ConfigData
 from ..input.area import Area
 from .framed_scalebar import FramedScaleBar
+
 
 LABEL_BBOX = dict(boxstyle='round,pad=0.2', fc='white', alpha=1, edgecolor='grey')
 
