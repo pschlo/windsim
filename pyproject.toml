@@ -31,3 +31,7 @@ dependencies = [
 
 [tool.uv.sources]
 planner = { git = "https://github.com/pschlo/planner" }
+
+
+[project.scripts]
+windsim = "windsim.cli:main"

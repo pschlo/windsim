@@ -7,7 +7,7 @@ from contextlib import contextmanager
 
 from planner import Asset, Recipe, DataAsset, inject
 
-from windsim import assets
+from windsim.common import assets
 
 from .turbine_types import MyTurbineTypesAsset
 from ._utils import _as_fixed_str

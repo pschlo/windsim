@@ -12,7 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 from planner import Asset, Recipe, inject
 
-from windsim.data_sources.cerra_heights import run_pipeline, Area
+from windsim.common.data_sources.cerra_heights import run_pipeline, Area
 
 
 def get_filename(year: int, month: int) -> str:

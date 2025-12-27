@@ -6,7 +6,7 @@ from pathlib import Path
 
 from planner import Asset, Recipe, inject, DataAsset
 
-from windsim import assets
+from windsim.common import assets
 
 from .area import AreaAsset
 from .chunksize import ChunksizeAsset

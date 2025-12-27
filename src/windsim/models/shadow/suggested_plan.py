@@ -2,7 +2,7 @@ from pathlib import Path
 from planner import RecipeBundle, StaticRecipe
 from planner import Planner, StaticRecipe
 
-from windsim import assets as common_assets, recipes as common_recipes
+from windsim.common import assets as common_assets, recipes as common_recipes
 from windsim.models.noise import assets as noise_assets, recipes as noise_recipes
 from windsim.models.noise.config import Config
 

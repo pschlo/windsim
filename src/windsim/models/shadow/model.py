@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 from planner import Asset, Recipe, DataAsset, inject
 
-from windsim import assets as common_assets
+from windsim.common import assets as common_assets
 from windsim.models.noise import assets as _na
 from windsim.models.noise.config import ConfigAsset
 

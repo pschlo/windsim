@@ -8,7 +8,7 @@ from pathlib import Path
 
 from planner import Asset, Recipe, inject, DataAsset
 
-from windsim.data_sources.fabdem import get_elevation
+from windsim.common.data_sources.fabdem import get_elevation
 
 
 class FabdemAsset(DataAsset[DataArray]):
