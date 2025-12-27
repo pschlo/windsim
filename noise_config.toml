@@ -1,0 +1,167 @@
+
+# Coordinate Reference Systems (CRS) can be specified in the following ways:
+#   - A name like 'WGS84', 'web mercator', 'UTM WGS 32N', 'UTM ETRS 20S'
+#   - PROJ string
+#   - Dictionary of PROJ parameters
+#   - JSON string with PROJ parameters
+#   - CRS WKT string
+#   - An authority string [e.g. 'epsg:4326']
+#   - An EPSG integer code [e.g. 4326]
+#   - A tuple of ("auth_name": "auth_code") [e.g. ('epsg', '4326')]
+
+
+[input]
+    # The data repository folder to read from and write to.
+    root_folder = '/resources/testcase_repository'
+
+    # The project name.
+    project = 'foo'
+
+    # List of enabled receiver groups. Comment out to disable.
+    receivers = [
+        'normal',
+        'grid'
+    ]
+
+    # Specifies the area of interest. Coordinates are interpreted as WGS84 longitude/latitude unless a CRS 
+    # is provided with the key "crs". Possible values are:
+    #   - Two corners of the area:
+    #       Example: {botleft=[3928, 40392], topright=[2393, 50109], crs='UTM ETRS 32N'}
+    #   - Center point and extent in meters:
+    #       Example: {center=[10.2, 50.09], extent=[5000, 5000]}
+    #   - Distance to expand the bounding box of the wind turbines in each direction:
+    #       Example: [2000, 3000] results in an area (2*2000 + bbox_width) meters wide and (2*3000 + bbox_height) meters tall.
+    # If x and y extents are identical, a single number can replace the [x, y] pair.
+    area = 2_500
+
+    [input.normal]
+        # Default height in meters. Ignored for receivers with specified height.
+        default_height = 5
+
+    [input.grid]
+        # Distance between grid receivers, in meters.
+        spacing = 100
+
+        # Height above ground, in meters.
+        height = 5
+
+        # Constant elevation for all grid receivers, specified in meters above mean sea level (MSL).
+        # If set, this value overrides real elevation data and places all receivers at a uniform altitude.
+        # If commented out, the actual elevation data from the terrain model is used.
+        # constant_elevation = 140
+
+
+
+[computation]
+    # If unset, values are automatically determined according to available resources.
+    # num_workers = 2
+    # threads_per_worker = 3
+    # memory_per_worker = '1.5GiB'
+
+    # Default: localhost:8787
+    dashboard_address = "0.0.0.0:8787"
+
+    # Possible values for chunk_size:
+    #   - A positive integer: Specifies an approximate value for the actual chunk size.
+    #   - 'auto': Determines the chunk size based on (num_receivers / (3 * num_cores)).
+    #   - {max=N}: Sets an upper limit on the chunk size. The size is calculated as with 'auto' but capped at N.
+    #       Example: {max=1_000_000}
+    #   - 'disabled': Disables chunking. This option may use excessive memory.
+    chunk_size = 'auto'
+
+    # Coordinate Reference System (CRS) for all calculations throughout the simulation.
+    # Must be a CRS where one unit approximately equals one meter in real-world measurements.
+    # Possible values:
+    #   - 'local_best': Creates a custom CRS positioned at the center of the input area that is as exact as possible.
+    #   - 'UTM ETRS': Determines best UTM zone and uses its ETRS89-based projection.
+    #   - 'UTM WGS': Determines best UTM zone and uses its WGS84-based projection.
+    #   - any CRS specification
+    coord_reference_system = 'local_best'
+
+    # Whether to use the German Interimsverfahren.
+    # Cannot be used with the alternative method.
+    interim = true
+
+    # Whether to use the ISO 9613-2 alternative method for ground attenuation.
+    # Cannot be used with the Interimsverfahren.
+    alternative_method = false
+
+    # Whether to extend ISO 9613-2 with the German TA Lärm.
+    ta_laerm = false
+
+    # Whether to consider barriers.
+    consider_barriers = false
+
+
+[output]
+    # List of enabled output assets. Comment out to disable.
+    assets = [
+        'map',
+        # 'file'
+    ]
+
+    [output.file]
+        # The directory that the output assets are saved to.
+        folder = 'output'
+
+    [output.map]
+        # Area buffer in meters, added to the input area extent. Can be positive or negative. If unset, buffer is 0.
+        buffer = 500
+        # Whether to draw a rectangle around the input area.
+        indicate_input_area = true
+
+        # The sound pressure levels to show as contour lines (isolines). Three options:
+        #   - array of levels to use
+        #   - desired number of levels; levels are determined automatically
+        #   - level range specification such as {start=10, stop=60, step=2}; start and stop are both inclusive
+        contour_levels = {start=-10, stop=50, step=10}
+
+        # How visible the contour lines and the filled space between them are. Ranges from 0 (fully transparent) to 1 (fully opaque).
+        contour_line_visibility = 0
+        contour_fill_visibility = 0.3
+
+        # Whether to add labels to the contour lines and the receiver locations.
+        add_contour_labels = false
+        add_receiver_labels = true
+
+        # Whether to assign a different color to each receiver locations. Ignored if there are many receivers.
+        individual_colors = true
+
+        # Sets the CRS for displaying the map.
+        # If false (recommended), the map uses the tile CRS (usually Web Mercator), and computation results are transformed to match it.
+        # If true, the map uses the computation CRS, and the tiles are transformed to match the computation results.
+        use_computation_crs = false
+
+        # Configuration of Stadia map tiles (https://stadiamaps.com). API key and zoom are required.
+        [output.map.tiles]
+            api_key = '10e50479-933d-4902-8559-15fdac40c420'
+            zoom = 13
+            style = 'stamen_toner_lite'
+            double_resolution = true
+
+
+
+[debug]
+    # List of enabled debugging features. Comment out to disable.
+    enabled = [
+        # 'jitter_turbine_positions',
+        'jitter_building_heights',
+        'discard_invalid_turbines',
+        'random_seed',
+        'filter_barriers'
+    ]
+
+    random_seed = 68
+
+    [debug.filter_barriers]
+        postcode = '52074'
+
+    [debug.jitter_turbine_positions]
+        # Maximum distance from the original location.
+        max_offset_distance = 4000
+
+    [debug.jitter_building_heights]
+        # Average amount by which building heights are offset.
+        average_offset = 300
+        # Maximum amount by which the offset can differ from the average_offset.
+        max_offset_deviation = 0
