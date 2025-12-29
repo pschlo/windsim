@@ -27,7 +27,7 @@ class ShadowSimulationAsset(Asset):
 class ShadowSimulationRecipe(Recipe[ShadowSimulationAsset]):
     _makes = ShadowSimulationAsset
 
-    turbine_types: _na.MyTurbineTypes = inject()
+    turbine_types: _na.TurbineModels = inject()
     area: _na.Area = inject()
     crs: _na.WorkingCrs = inject()
     turbines: AdaptedTurbinesAsset = inject()

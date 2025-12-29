@@ -9,17 +9,17 @@ from .config import Config
 
 
 RECIPE_BUNDLE = RecipeBundle([
-    common_recipes.ExistingTurbinesJson,
-    common_recipes.ScenariosJson,
-    common_recipes.TurbineTypesJson,
+    common_recipes.RawTurbines,
+    common_recipes.RawTurbineModels,
     common_recipes.Fabdem,
     common_recipes.DaskCluster,
-    common_recipes.ReceiversJson,
+    common_recipes.RawReceivers,
+    common_recipes.Setup,
 
     noise_recipes.Area,
     noise_recipes.TransformedTurbines,
-    noise_recipes.RawTurbines,
-    noise_recipes.TurbineTypes,
+    noise_recipes.BaseTurbines,
+    noise_recipes.TurbineModels,
     noise_recipes.Frequencies,
     noise_recipes.WorkingCrs,
     noise_recipes.Chunksize,

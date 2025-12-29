@@ -15,25 +15,19 @@ from .frequencies import FrequenciesAsset
 log = logging.getLogger(__name__)
 
 
-class MyTurbineTypesAsset(DataAsset[xr.Dataset]):
+class TurbineModelsAsset(DataAsset[xr.Dataset]):
     pass
 
 
-class MyTurbineTypesRecipe(Recipe[MyTurbineTypesAsset]):
-    _makes = MyTurbineTypesAsset
+class TurbineModelsRecipe(Recipe[TurbineModelsAsset]):
+    _makes = TurbineModelsAsset
 
-    turbine_types: assets.TurbineTypesJson = inject()
+    raw_turbine_models: assets.RawTurbineModels = inject()
     frequencies: FrequenciesAsset = inject()
 
     @override
     def make(self):
-        df = pd.DataFrame(self.turbine_types.d)
-
-        # Raise if octave_frequencies_db is None for any model
-        bad_none = df['octave_frequencies_db'].isna()
-        if bad_none.any():
-            model = df.loc[bad_none, 'model'].iloc[0]
-            raise ValueError(f"octave_frequencies_db is None for model '{model}'")
+        df = pd.DataFrame(self.raw_turbine_models.d)
 
         # convert to xarray
         ds = xr.Dataset.from_dataframe(
@@ -54,4 +48,4 @@ class MyTurbineTypesRecipe(Recipe[MyTurbineTypesAsset]):
         )
 
         ds = _as_fixed_str(ds, ['model', 'manufacturer'])
-        return MyTurbineTypesAsset(ds)
+        return TurbineModelsAsset(ds)

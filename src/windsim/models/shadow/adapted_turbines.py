@@ -17,7 +17,7 @@ class AdaptedTurbinesRecipe(Recipe[AdaptedTurbinesAsset]):
     _makes = AdaptedTurbinesAsset
 
     turbines: noise_assets.FullTurbines = inject()
-    turbine_types: noise_assets.MyTurbineTypes = inject()
+    turbine_types: noise_assets.TurbineModels = inject()
 
     @override
     def make(self):

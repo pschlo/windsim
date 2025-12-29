@@ -34,7 +34,7 @@ class ReceiverGroupsRecipe(Recipe[ReceiverGroupsAsset]):
     _makes = ReceiverGroupsAsset
 
     config: ConfigAsset = inject()
-    receivers: assets.ReceiversJson = inject()
+    receivers: assets.RawReceivers = inject()
     elevation: ElevationAsset = inject()
     crs: WorkingCrsAsset = inject()
     aoi: AreaOfInterestAsset = inject()
@@ -70,29 +70,16 @@ class ReceiverGroupsRecipe(Recipe[ReceiverGroupsAsset]):
 
 
 
-def get_receivers(asset: assets.ReceiversJson, elevation: xr.DataArray, working_crs: pyproj.CRS, normal_conf: NormalReceivers, aoi: pyproj.aoi.AreaOfInterest, chunksize: Chunksize) -> xr.Dataset:
+def get_receivers(asset: assets.RawReceivers, elevation: xr.DataArray, working_crs: pyproj.CRS, normal_conf: NormalReceivers, aoi: pyproj.aoi.AreaOfInterest, chunksize: Chunksize) -> xr.Dataset:
     df = (
         pd.DataFrame(asset.data)
-        .drop(columns=["x", "y"], errors='ignore')
         .rename(columns=dict(id='receiver'))
         .set_index('receiver')
     )
 
     # convert to xarray
     ds = xr.Dataset.from_dataframe(df)
-    ds = _as_fixed_str(
-        ds,
-        [
-            'receiver',
-            'street',
-            'housenumber',
-            'city',
-            'postcode',
-            'country',
-            'noise_classification'
-        ],
-        errors='ignore'
-    )
+    ds = _as_fixed_str(ds, ['receiver'], errors='ignore')
     ds['position_lonlat'] = xr.concat([ds['longitude'], ds['latitude']], dim='spatial')
     ds = ds.assign_coords(dict(spatial=['x', 'y'])).drop_vars(['longitude', 'latitude'])
 

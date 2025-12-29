@@ -19,8 +19,8 @@ RECIPE_BUNDLE = RecipeBundle([
 
     noise_recipes.Area,
     noise_recipes.TransformedTurbines,
-    noise_recipes.RawTurbines,
-    noise_recipes.TurbineTypes,
+    noise_recipes.BaseTurbines,
+    noise_recipes.TurbineModels,
     noise_recipes.Frequencies,
     noise_recipes.WorkingCrs,
     noise_recipes.Chunksize,

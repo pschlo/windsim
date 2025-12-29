@@ -1,0 +1,50 @@
+
+####### TURBINE MODELS #######
+
+[turbine_model.small]
+sound_power_db = [92.1, 96.4, 99.8, 101.2, 102.0, 99.5, 95.1, 90.0]
+
+[turbine_model.medium]
+sound_power_db = [92.1, 96.4, 99.8, 101.2, 102.0, 99.5, 95.1, 90.0]
+
+[turbine_model.large]
+sound_power_db = [92.1, 96.4, 99.8, 101.2, 102.0, 99.5, 95.1, 90.0]
+
+
+####### TURBINES #######
+
+[[turbine]]
+name = "T01"
+model = "small"
+status = "operating"
+position_lonlat = [0, 0]
+elevation_m = 0
+
+[[turbine]]
+name = "T02"
+model = "large"
+status = "operating"
+position_lonlat = [0, 0]
+elevation_m = 0
+
+[[turbine]]
+name = "T03"
+model = "medium"
+status = "new"
+position_lonlat = [0, 0]
+elevation_m = 0
+
+[[turbine]]
+name = "T04"
+model = "small"
+status = "new"
+position_lonlat = [0, 0]
+elevation_m = 0
+
+
+####### SPECIFIC RECEIVERS #######
+
+[[receiver]]
+name = "KaWo"
+position_lonlat = [0, 0]
+elevation_m = 0

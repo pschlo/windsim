@@ -11,6 +11,7 @@ def main():
     from windsim.models.noise.suggested_plan import run_simulation
 
     run_simulation(
-        root=Path.cwd(),
-        project="foo"
+        root=Path.cwd() / "resources" / "repository",
+        project="foo",
+        config_path=Path.cwd() / "noise_config.toml"
     )

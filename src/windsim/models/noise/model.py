@@ -26,7 +26,7 @@ class NoiseSimulationAsset(Asset):
 class NoiseSimulationRecipe(Recipe[NoiseSimulationAsset]):
     _makes = NoiseSimulationAsset
 
-    turbine_types: _na.MyTurbineTypes = inject()
+    turbine_types: _na.TurbineModels = inject()
     area: _na.Area = inject()
     crs: _na.WorkingCrs = inject()
     turbines: _na.FullTurbines = inject()

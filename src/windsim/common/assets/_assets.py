@@ -8,4 +8,9 @@ from . import (
     CerraStoreConfAsset as CerraStoreConf,
     CerraHeightsConfAsset as CerraHeightsConf,
     FabdemConfAsset as FabdemConf,
+
+    SetupAsset as Setup,
+    RawTurbinesAsset as RawTurbines,
+    RawReceiversAsset as RawReceivers,
+    RawTurbineModelsAsset as RawTurbineModels
 )

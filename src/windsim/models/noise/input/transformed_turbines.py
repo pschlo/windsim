@@ -8,7 +8,7 @@ from contextlib import contextmanager
 from planner import Asset, Recipe, DataAsset, inject
 from windsim.coordinate_reference_systems import CRS
 
-from .raw_turbines import RawTurbinesAsset
+from .base_turbines import BaseTurbinesAsset
 from .working_crs import WorkingCrsAsset
 from .area_of_interest import AreaOfInterestAsset
 from ..config import ConfigAsset
@@ -25,7 +25,7 @@ class TransformedTurbinesRecipe(Recipe[TransformedTurbinesAsset]):
     _makes = TransformedTurbinesAsset
 
     config: ConfigAsset = inject()
-    turbines: RawTurbinesAsset = inject()
+    turbines: BaseTurbinesAsset = inject()
     crs: WorkingCrsAsset = inject()
     aoi: AreaOfInterestAsset = inject()
 

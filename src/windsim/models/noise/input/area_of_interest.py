@@ -7,7 +7,7 @@ from planner import Asset, Recipe, inject, DataAsset
 
 from windsim.coordinate_reference_systems import CRS
 
-from .raw_turbines import RawTurbinesAsset
+from .base_turbines import BaseTurbinesAsset
 from ..config import area_specs, ConfigAsset
 
 
@@ -21,7 +21,7 @@ class AreaOfInterestAsset(DataAsset[pyproj.aoi.AreaOfInterest]):
 class AreaOfInterestRecipe(Recipe[AreaOfInterestAsset]):
     _makes = AreaOfInterestAsset
 
-    turbines: RawTurbinesAsset = inject()
+    turbines: BaseTurbinesAsset = inject()
     config: ConfigAsset = inject()
 
     @override

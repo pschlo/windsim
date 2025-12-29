@@ -8,12 +8,12 @@ from .elevation import ElevationRecipe as Elevation
 from .exposure_times import ExposureTimesRecipe as ExposureTimes
 from .frequencies import FrequenciesRecipe as Frequencies
 from .full_turbines import FullTurbinesRecipe as FullTurbines
-from .raw_turbines import RawTurbinesRecipe as RawTurbines
+from .base_turbines import BaseTurbinesRecipe as BaseTurbines
 from .receiver_groups import ReceiverGroupsRecipe as ReceiverGroups
 from .receivers import ReceiversRecipe as Receivers
 from .sound_power_levels import SoundPowerLevelsRecipe as SoundPowerLevels
 from .timeslice_durations import TimesliceDurationsRecipe as TimesliceDurations
 from .transformed_turbines import TransformedTurbinesRecipe as TransformedTurbines
-from .turbine_types import MyTurbineTypesRecipe as TurbineTypes
+from .turbine_models import TurbineModelsRecipe as TurbineModels
 from .working_crs import WorkingCrsRecipe as WorkingCrs
 from .elevation import FabdemConfRecipe as FabdemConf

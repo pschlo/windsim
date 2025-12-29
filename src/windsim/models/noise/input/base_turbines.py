@@ -9,7 +9,7 @@ from planner import Asset, Recipe, DataAsset, inject
 
 from windsim.common import assets
 
-from .turbine_types import MyTurbineTypesAsset
+from .turbine_models import TurbineModelsAsset
 from ._utils import _as_fixed_str
 from ..config import ConfigAsset
 
@@ -17,17 +17,16 @@ from ..config import ConfigAsset
 log = logging.getLogger(__name__)
 
 
-class RawTurbinesAsset(DataAsset[xr.Dataset]):
+class BaseTurbinesAsset(DataAsset[xr.Dataset]):
     pass
 
 
-class RawTurbinesRecipe(Recipe[RawTurbinesAsset]):
-    _makes = RawTurbinesAsset
+class BaseTurbinesRecipe(Recipe[BaseTurbinesAsset]):
+    _makes = BaseTurbinesAsset
 
     config: ConfigAsset = inject()
-    existing_turbines: assets.ExistingTurbinesJson = inject()
-    scenarios: assets.ScenariosJson = inject()
-    turbine_types: MyTurbineTypesAsset = inject()
+    turbines: assets.RawTurbines = inject()
+    turbine_models: TurbineModelsAsset = inject()
 
     @override
     @contextmanager
@@ -35,12 +34,9 @@ class RawTurbinesRecipe(Recipe[RawTurbinesAsset]):
         """Turbines, untransformed and possibly without elevation."""
         log.debug("  Preparing turbines") 
 
-        new_turbines = self.scenarios.d[0]["turbine_placements"]
-
         # combine existing sound sources and new turbines
         df = (
-            pd.DataFrame(self.existing_turbines.d + new_turbines)
-            .drop(columns=["x", "y"], errors='ignore')
+            pd.DataFrame(self.turbines.d)
             .rename(columns=dict(placement_id="turbine"))
             .set_index("turbine")
         )
@@ -60,7 +56,7 @@ class RawTurbinesRecipe(Recipe[RawTurbinesAsset]):
                     input_core_dims=[['turbine'], ['model']],
                     output_core_dims=[['turbine']]
                 ))
-            is_valid = xr.map_blocks(_is_valid, ds, args=[self.turbine_types.d]).compute()
+            is_valid = xr.map_blocks(_is_valid, ds, args=[self.turbine_models.d]).compute()
             if not is_valid.all():
                 log.warning(f"Discarding {sum(~is_valid.values)} invalid turbines")
                 ds = ds.sel(turbine=is_valid)
@@ -70,6 +66,6 @@ class RawTurbinesRecipe(Recipe[RawTurbinesAsset]):
             ds['ground_level_m'] = 'turbine', np.full(ds.sizes['turbine'], np.nan)
 
         try:
-            yield RawTurbinesAsset(ds)
+            yield BaseTurbinesAsset(ds)
         finally:
             print("CLEANING UP RAW TURBINES")

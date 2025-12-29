@@ -4,7 +4,7 @@ import xarray as xr
 
 from planner import Asset, Recipe, DataAsset, inject
 from .full_turbines import FullTurbinesAsset
-from .turbine_types import MyTurbineTypesAsset
+from .turbine_models import TurbineModelsAsset
 from .timeslice_durations import TimesliceDurationsAsset
 from ..config import ConfigAsset
 
@@ -21,7 +21,7 @@ class SoundPowerLevelsRecipe(Recipe[SoundPowerLevelsAsset]):
     
     config: ConfigAsset = inject()
     turbines: FullTurbinesAsset = inject()
-    turbine_types: MyTurbineTypesAsset = inject()
+    turbine_types: TurbineModelsAsset = inject()
     timeslices: TimesliceDurationsAsset = inject()
 
     @override

@@ -8,11 +8,11 @@ from .elevation import ElevationAsset as Elevation
 from .exposure_times import ExposureTimesAsset as ExposureTimes
 from .frequencies import FrequenciesAsset as Frequencies
 from .full_turbines import FullTurbinesAsset as FullTurbines
-from .raw_turbines import RawTurbinesAsset as RawTurbines
+from .base_turbines import BaseTurbinesAsset as BaseTurbines
 from .receiver_groups import ReceiverGroupsAsset as ReceiverGroups
 from .receivers import ReceiversAsset as Receivers
 from .sound_power_levels import SoundPowerLevelsAsset as SoundPowerLevels
 from .timeslice_durations import TimesliceDurationsAsset as TimesliceDurations
 from .transformed_turbines import TransformedTurbinesAsset as TransformedTurbines
-from .turbine_types import MyTurbineTypesAsset as MyTurbineTypes
+from .turbine_models import TurbineModelsAsset as TurbineModels
 from .working_crs import WorkingCrsAsset as WorkingCrs
