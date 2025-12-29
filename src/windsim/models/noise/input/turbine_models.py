@@ -22,7 +22,7 @@ class TurbineModelsAsset(DataAsset[xr.Dataset]):
 class TurbineModelsRecipe(Recipe[TurbineModelsAsset]):
     _makes = TurbineModelsAsset
 
-    raw_turbine_models: assets.RawTurbineModels = inject()
+    raw_turbine_models: assets.TurbineModelsDict = inject()
     frequencies: FrequenciesAsset = inject()
 
     @override

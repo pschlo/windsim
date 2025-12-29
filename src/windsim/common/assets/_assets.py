@@ -10,7 +10,7 @@ from . import (
     FabdemConfAsset as FabdemConf,
 
     SetupAsset as Setup,
-    RawTurbinesAsset as RawTurbines,
-    RawReceiversAsset as RawReceivers,
-    RawTurbineModelsAsset as RawTurbineModels
+    TurbinesDictAsset as TurbinesDict,
+    ReceiversDictAsset as ReceiversDict,
+    TurbineModelsDictAsset as TurbineModelsDict
 )

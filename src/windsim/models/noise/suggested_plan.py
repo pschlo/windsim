@@ -9,11 +9,11 @@ from .config import Config
 
 
 RECIPE_BUNDLE = RecipeBundle([
-    common_recipes.RawTurbines,
-    common_recipes.RawTurbineModels,
+    common_recipes.TurbinesDict,
+    common_recipes.TurbineModelsDict,
     common_recipes.Fabdem,
     common_recipes.DaskCluster,
-    common_recipes.RawReceivers,
+    common_recipes.ReceiversDict,
     common_recipes.Setup,
 
     noise_recipes.Area,

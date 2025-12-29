@@ -5,7 +5,7 @@ from . import (
     CerraHeightsRecipe as CerraHeights,
 
     SetupRecipe as Setup,
-    RawReceiversRecipe as RawReceivers,
-    RawTurbinesRecipe as RawTurbines,
-    RawTurbineModelsRecipe as RawTurbineModels
+    ReceiversDictRecipe as ReceiversDict,
+    TurbinesDictRecipe as TurbinesDict,
+    TurbineModelsDictRecipe as TurbineModelsDict
 )

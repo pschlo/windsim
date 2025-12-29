@@ -34,7 +34,7 @@ class ReceiverGroupsRecipe(Recipe[ReceiverGroupsAsset]):
     _makes = ReceiverGroupsAsset
 
     config: ConfigAsset = inject()
-    receivers: assets.RawReceivers = inject()
+    receivers: assets.ReceiversDict = inject()
     elevation: ElevationAsset = inject()
     crs: WorkingCrsAsset = inject()
     aoi: AreaOfInterestAsset = inject()
@@ -70,7 +70,7 @@ class ReceiverGroupsRecipe(Recipe[ReceiverGroupsAsset]):
 
 
 
-def get_receivers(asset: assets.RawReceivers, elevation: xr.DataArray, working_crs: pyproj.CRS, normal_conf: NormalReceivers, aoi: pyproj.aoi.AreaOfInterest, chunksize: Chunksize) -> xr.Dataset:
+def get_receivers(asset: assets.ReceiversDict, elevation: xr.DataArray, working_crs: pyproj.CRS, normal_conf: NormalReceivers, aoi: pyproj.aoi.AreaOfInterest, chunksize: Chunksize) -> xr.Dataset:
     df = (
         pd.DataFrame(asset.data)
         .rename(columns=dict(id='receiver'))

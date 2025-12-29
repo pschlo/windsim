@@ -25,7 +25,7 @@ class BaseTurbinesRecipe(Recipe[BaseTurbinesAsset]):
     _makes = BaseTurbinesAsset
 
     config: ConfigAsset = inject()
-    turbines: assets.RawTurbines = inject()
+    turbines: assets.TurbinesDict = inject()
     turbine_models: TurbineModelsAsset = inject()
 
     @override

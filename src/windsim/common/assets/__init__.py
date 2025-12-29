@@ -5,9 +5,9 @@ from .dask_cluster import DaskClusterAsset, DaskClusterRecipe, DaskClusterConfAs
 
 # Site setup
 from .setup import SetupAsset, SetupRecipe
-from .raw_turbine_models import RawTurbineModelsAsset, RawTurbineModelsRecipe
-from .raw_turbines import RawTurbinesAsset, RawTurbinesRecipe
-from .raw_receivers import RawReceiversAsset, RawReceiversRecipe
+from .turbine_models_dict import TurbineModelsDictAsset, TurbineModelsDictRecipe
+from .turbines_dict import TurbinesDictAsset, TurbinesDictRecipe
+from .receivers_dict import ReceiversDictAsset, ReceiversDictRecipe
 
 from . import _assets as assets
 from . import _recipes as recipes
