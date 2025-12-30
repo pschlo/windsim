@@ -3,12 +3,15 @@
 
 [turbine_model.small]
 sound_power_db = [92.1, 96.4, 99.8, 101.2, 102.0, 99.5, 95.1, 90.0]
+manufacturer = "Vestas"
 
 [turbine_model.medium]
 sound_power_db = [92.1, 96.4, 99.8, 101.2, 102.0, 99.5, 95.1, 90.0]
+manufacturer = "Vestas"
 
 [turbine_model.large]
 sound_power_db = [92.1, 96.4, 99.8, 101.2, 102.0, 99.5, 95.1, 90.0]
+manufacturer = "Vestas"
 
 
 ####### TURBINES #######

@@ -9,6 +9,7 @@ from .setup import SetupAsset
 
 class TurbineModel(TypedDict):
     sound_power_db: list[float]
+    manufacturer: str
 
 
 class TurbineModelsDictAsset(DataAsset[dict[str, TurbineModel]]):
