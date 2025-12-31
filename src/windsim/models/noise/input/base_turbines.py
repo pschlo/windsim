@@ -29,7 +29,6 @@ class BaseTurbinesRecipe(Recipe[BaseTurbinesAsset]):
     turbine_models: TurbineModelsAsset = inject()
 
     @override
-    @contextmanager
     def make(self):
         """Turbines, untransformed and possibly without elevation."""
         log.debug("  Preparing turbines")
@@ -72,7 +71,4 @@ class BaseTurbinesRecipe(Recipe[BaseTurbinesAsset]):
         if 'elevation_m' not in ds:
             ds['elevation_m'] = 'turbine', np.full(ds.sizes['turbine'], np.nan)
 
-        try:
-            yield BaseTurbinesAsset(ds)
-        finally:
-            print("CLEANING UP RAW TURBINES")
+        return BaseTurbinesAsset(ds)

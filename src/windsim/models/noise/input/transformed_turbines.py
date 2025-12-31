@@ -30,7 +30,6 @@ class TransformedTurbinesRecipe(Recipe[TransformedTurbinesAsset]):
     aoi: AreaOfInterestAsset = inject()
 
     @override
-    @contextmanager
     def make(self):
         """Transform turbines to working CRS."""
         log.debug("  Preparing transformed turbines")
@@ -54,7 +53,4 @@ class TransformedTurbinesRecipe(Recipe[TransformedTurbinesAsset]):
             offset = xr.DataArray(offset_xy, dims=['turbine', 'spatial'])
             ds['position'] += offset
 
-        try:
-            yield TransformedTurbinesAsset(ds)
-        finally:
-            print("CLEANING UP TRANSFORMED TURBINES")
+        return TransformedTurbinesAsset(ds)

@@ -13,6 +13,7 @@ from ..input import assets as noise_assets
 from ..model import NoiseSimulationAsset
 from . import plotting
 from ..config import ConfigAsset
+from windsim.common import assets as common_assets
 
 
 log = logging.getLogger(__name__)
@@ -28,6 +29,7 @@ class NoiseOutputRecipe(Recipe[NoiseOutputAsset]):
     _makes = NoiseOutputAsset
     _dir = 'noise_output'
 
+    cluster: common_assets.DaskCluster = inject()
     config: ConfigAsset = inject()
     result: NoiseSimulationAsset = inject()
     area: noise_assets.Area = inject()
@@ -37,7 +39,6 @@ class NoiseOutputRecipe(Recipe[NoiseOutputAsset]):
     elevation: noise_assets.Elevation = inject()
 
     @override
-    @contextmanager
     def make(self):
         """Processes the simulation result. Lazy data will be computed as required."""
         
@@ -126,13 +127,10 @@ class NoiseOutputRecipe(Recipe[NoiseOutputAsset]):
                 folder=self.workdir
             )
 
-        try:
-            yield NoiseOutputAsset(
-                receiver_sound_pressure_levels=normal_restructured[main_result_var] if normal_restructured is not None else None,
-                grid_sound_pressure_levels=grid_restructured[main_result_var] if grid_restructured is not None else None
-            )
-        finally:
-            print("CLEANING UP OUTPUT")
+        return NoiseOutputAsset(
+            receiver_sound_pressure_levels=normal_restructured[main_result_var] if normal_restructured is not None else None,
+            grid_sound_pressure_levels=grid_restructured[main_result_var] if grid_restructured is not None else None
+        )
 
 
 def restructure_grid_data(input: xr.Dataset, result: xr.Dataset) -> xr.Dataset:

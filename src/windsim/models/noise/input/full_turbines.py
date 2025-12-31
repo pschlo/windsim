@@ -26,7 +26,6 @@ class FullTurbinesRecipe(Recipe[FullTurbinesAsset]):
     chunksize: ChunksizeAsset = inject()
 
     @override
-    @contextmanager
     def make(self):
         """Create fully prepared turbines that include elevation data."""
         log.debug("  Preparing turbines")
@@ -49,7 +48,4 @@ class FullTurbinesRecipe(Recipe[FullTurbinesAsset]):
         ds = ds.reindex(spatial=['x', 'y', 'z']).chunk(spatial=-1)
         ds['position'].loc[dict(spatial='z')] = position_z
 
-        try:
-            yield FullTurbinesAsset(ds)
-        finally:
-            print("CLEANING UP FULL TURBINES")
+        return FullTurbinesAsset(ds)

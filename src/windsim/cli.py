@@ -1,6 +1,11 @@
 import logging
 from .setup_logging import setup_logging
-setup_logging()
+setup_logging(
+    logging.DEBUG,
+    loggers=[
+        "planner"
+    ]
+)
 from pathlib import Path
 
 log = logging.getLogger(__name__)
