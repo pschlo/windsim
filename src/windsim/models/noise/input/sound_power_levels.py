@@ -30,8 +30,8 @@ class SoundPowerLevelsRecipe(Recipe[SoundPowerLevelsAsset]):
 
         # Match the sound power levels to each turbine based on its model
         da = (
-            self.turbine_types.d['sound_power_level_db']
-            .sel(model=self.turbines.d['turbine_type'])
+            self.turbine_types.d['sound_power_db']
+            .sel(model=self.turbines.d['model'])
             .drop_vars('model')
         )
 

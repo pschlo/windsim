@@ -42,10 +42,10 @@ class FullTurbinesRecipe(Recipe[FullTurbinesAsset]):
             )
             .drop_vars(['x', 'y', 'spatial_ref'], errors='ignore')
         )
-        ds['ground_level_m'] = ds['ground_level_m'].fillna(real_elevations)
+        ds['elevation_m'] = ds['elevation_m'].fillna(real_elevations)
 
         # add Z coordinate to position
-        position_z = ds['ground_level_m'] + ds['hub_height_m']
+        position_z = ds['elevation_m'] + ds['hub_height_m']
         ds = ds.reindex(spatial=['x', 'y', 'z']).chunk(spatial=-1)
         ds['position'].loc[dict(spatial='z')] = position_z
 

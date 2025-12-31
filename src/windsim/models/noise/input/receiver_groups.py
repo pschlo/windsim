@@ -73,15 +73,22 @@ class ReceiverGroupsRecipe(Recipe[ReceiverGroupsAsset]):
 def get_receivers(asset: assets.ReceiversDict, elevation: xr.DataArray, working_crs: pyproj.CRS, normal_conf: NormalReceivers, aoi: pyproj.aoi.AreaOfInterest, chunksize: Chunksize) -> xr.Dataset:
     df = (
         pd.DataFrame(asset.data)
-        .rename(columns=dict(id='receiver'))
+        .rename(columns=dict(name='receiver'))
         .set_index('receiver')
     )
 
     # convert to xarray
     ds = xr.Dataset.from_dataframe(df)
     ds = _as_fixed_str(ds, ['receiver'], errors='ignore')
-    ds['position_lonlat'] = xr.concat([ds['longitude'], ds['latitude']], dim='spatial')
-    ds = ds.assign_coords(dict(spatial=['x', 'y'])).drop_vars(['longitude', 'latitude'])
+
+    ds["position_lonlat"] = xr.DataArray(
+        data=np.stack(ds["position_lonlat"].values),  # type: ignore
+        dims=("receiver", "spatial"),
+        coords={
+            "receiver": ds.coords["receiver"],
+            "spatial": ["x", "y"],
+        },
+    )
 
     # Create variables if they don't exist yet
     if 'elevation_m' not in ds:
@@ -91,7 +98,7 @@ def get_receivers(asset: assets.ReceiversDict, elevation: xr.DataArray, working_
 
     # Transform to working CRS
     t = pyproj.Transformer.from_crs(CRS.WGS84, working_crs, always_xy=True, area_of_interest=aoi)
-    x, y = t.transform(*ds['position_lonlat'].sel(spatial=['x', 'y']).values)
+    x, y = t.transform(*ds['position_lonlat'].sel(spatial=['x', 'y']).transpose('spatial', ...).values)
     ds = (
         ds
         .assign(position=(('spatial', 'receiver'), [x, y]))

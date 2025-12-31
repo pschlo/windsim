@@ -1,16 +1,18 @@
-
 ####### TURBINE MODELS #######
 
 [turbine_model.small]
-sound_power_db = [92.1, 96.4, 99.8, 101.2, 102.0, 99.5, 95.1, 90.0]
+# smaller rotor / lower hub height
+sound_power_db = [89.5, 93.8, 97.2, 98.6, 99.4, 97.0, 92.6, 87.5]
 manufacturer = "Vestas"
 
 [turbine_model.medium]
-sound_power_db = [92.1, 96.4, 99.8, 101.2, 102.0, 99.5, 95.1, 90.0]
+# mid-sized onshore turbine
+sound_power_db = [92.0, 96.3, 99.7, 101.1, 102.0, 99.5, 95.1, 90.0]
 manufacturer = "Vestas"
 
 [turbine_model.large]
-sound_power_db = [92.1, 96.4, 99.8, 101.2, 102.0, 99.5, 95.1, 90.0]
+# large modern onshore turbine
+sound_power_db = [94.5, 98.8, 102.2, 103.6, 104.5, 102.0, 97.6, 92.5]
 manufacturer = "Vestas"
 
 
@@ -20,28 +22,32 @@ manufacturer = "Vestas"
 name = "T01"
 model = "small"
 status = "operating"
-position_lonlat = [0, 0]
+hub_height_m = 90
+position_lonlat = [8.585, 56.295]
 elevation_m = 0
 
 [[turbine]]
 name = "T02"
 model = "large"
 status = "operating"
-position_lonlat = [0, 0]
+hub_height_m = 110
+position_lonlat = [8.612, 56.308]
 elevation_m = 0
 
 [[turbine]]
 name = "T03"
 model = "medium"
 status = "new"
-position_lonlat = [0, 0]
-elevation_m = 0
+hub_height_m = 100
+position_lonlat = [8.598, 56.322]
+# elevation_m = 0
 
 [[turbine]]
 name = "T04"
 model = "small"
 status = "new"
-position_lonlat = [0, 0]
+hub_height_m = 80
+position_lonlat = [8.570, 56.310]
 elevation_m = 0
 
 
@@ -49,5 +55,5 @@ elevation_m = 0
 
 [[receiver]]
 name = "KaWo"
-position_lonlat = [0, 0]
+position_lonlat = [8.600, 56.300]
 elevation_m = 0
