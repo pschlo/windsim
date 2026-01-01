@@ -26,7 +26,7 @@ from ..config.sections.input import GridReceivers, NormalReceivers
 log = logging.getLogger(__name__)
 
 
-class ReceiverGroupsAsset(DataAsset[dict]):
+class ReceiverGroupsAsset(DataAsset[dict[str, xr.Dataset]]):
     pass
 
 

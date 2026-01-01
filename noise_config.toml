@@ -146,7 +146,7 @@
     enabled = [
         # 'jitter_turbine_positions',
         'jitter_building_heights',
-        'discard_invalid_turbines',
+        # 'discard_invalid_turbines',
         'random_seed',
         'filter_barriers'
     ]

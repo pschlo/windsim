@@ -24,7 +24,7 @@ model = "small"
 status = "operating"
 hub_height_m = 90
 position_lonlat = [8.585, 56.295]
-elevation_m = 0
+# elevation_m = 0
 
 [[turbine]]
 name = "T02"
@@ -32,7 +32,7 @@ model = "large"
 status = "operating"
 hub_height_m = 110
 position_lonlat = [8.612, 56.308]
-elevation_m = 0
+# elevation_m = 500
 
 [[turbine]]
 name = "T03"
@@ -48,12 +48,13 @@ model = "small"
 status = "new"
 hub_height_m = 80
 position_lonlat = [8.570, 56.310]
-elevation_m = 0
+# elevation_m = 0
 
 
 ####### SPECIFIC RECEIVERS #######
 
 [[receiver]]
-name = "KaWo"
+name = "R01"
 position_lonlat = [8.600, 56.300]
-elevation_m = 0
+# height_m = 0
+# elevation_m = 0
