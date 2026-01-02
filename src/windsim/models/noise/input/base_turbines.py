@@ -47,10 +47,10 @@ class BaseTurbinesRecipe(Recipe[BaseTurbinesAsset]):
         ds["position_lonlat"] = xr.DataArray(
             data=np.stack(ds["position_lonlat"].values),  # type: ignore
             dims=("turbine", "spatial"),
-            coords={
-                "turbine": ds.coords["turbine"],
-                "spatial": ["x", "y"],
-            },
+            coords=dict(
+                turbine=ds.coords["turbine"],
+                spatial=["x", "y"]
+            ),
         )
 
         # DEBUG: Discard turbines whose model does not appear in turbinetypes.

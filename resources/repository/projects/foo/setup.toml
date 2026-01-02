@@ -8,7 +8,6 @@ manufacturer = "Vestas"
 [turbine_model.medium]
 # mid-sized onshore turbine
 sound_power_db = [92.0, 96.3, 99.7, 101.1, 102.0, 99.5, 95.1, 90.0]
-manufacturer = "Vestas"
 
 [turbine_model.large]
 # large modern onshore turbine
