@@ -35,8 +35,6 @@ class TurbineModelsRecipe(Recipe[TurbineModelsAsset]):
 
         # Convert to xarray
         ds = xr.Dataset.from_dataframe(df)
-
-        # Type validation
         ds = xr_as_dtype(ds, dict(
             model="str",
             manufacturer=("str", "<MISSING>"),

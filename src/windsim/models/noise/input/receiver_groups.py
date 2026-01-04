@@ -77,13 +77,14 @@ def get_receivers(asset: assets.ReceiversDict, elevation: xr.DataArray, working_
     ds = xr.Dataset.from_dataframe(df)
     ds = xr_as_dtype(ds, dict(
         index="int",
-        name="str",
+        name=("str", "<unnamed>"),
         position_lonlat="object",
         height_m=("float", np.nan),
         elevation_m=("float", np.nan)
     ))
 
     # Create index
+    ds["name"] = ds["name"].broadcast_like(ds["index"])
     ds = (
         ds
         .rename(name="receiver")

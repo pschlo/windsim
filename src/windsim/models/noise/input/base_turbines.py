@@ -33,24 +33,29 @@ class BaseTurbinesRecipe(Recipe[BaseTurbinesAsset]):
         """Turbines, untransformed and possibly without elevation."""
         log.debug("  Preparing turbines")
 
-        # Load dataframe
-        df = (
-            pd.DataFrame(self.turbines.d)
-            .rename(columns=dict(name="turbine"))
-            .set_index("turbine")
-        )
+        df = pd.DataFrame(self.turbines.d)
 
         # Convert to xarray
         ds = xr.Dataset.from_dataframe(df)
-
         ds = xr_as_dtype(ds, dict(
-            turbine=("str", "<unnamed>"),
+            index="int",
+            name=("str", "<unnamed>"),
             model="str",
             status=("str", "new"),
             hub_height_m="float",
             position_lonlat="object",
             elevation_m=("float", np.nan)
         ))
+
+        # Create index
+        ds["name"] = ds["name"].broadcast_like(ds["index"])
+        ds = (
+            ds
+            .rename(name="turbine")
+            .set_coords("turbine")
+            .swap_dims(index="turbine")
+            .drop_vars("index")
+        )
 
         ds["position_lonlat"] = xr.DataArray(
             data=np.stack(ds["position_lonlat"].values),  # type: ignore
@@ -85,9 +90,5 @@ class BaseTurbinesRecipe(Recipe[BaseTurbinesAsset]):
             if not is_valid.all():
                 log.warning(f"Discarding {sum(~is_valid.values)} invalid turbines")
                 ds = ds.sel(turbine=is_valid)
-
-        # Create required variables if they don't exist yet
-        if 'elevation_m' not in ds:
-            ds['elevation_m'] = 'turbine', np.full(ds.sizes['turbine'], np.nan)
 
         return BaseTurbinesAsset(ds)

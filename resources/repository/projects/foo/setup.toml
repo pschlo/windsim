@@ -18,7 +18,6 @@ manufacturer = "Vestas"
 ####### TURBINES #######
 
 [[turbine]]
-name = "T01"
 model = "small"
 status = "operating"
 hub_height_m = 90
@@ -27,7 +26,6 @@ position_lonlat = [8.585, 56.295]
 # baz = "hi"
 
 [[turbine]]
-name = "T02"
 model = "large"
 status = "operating"
 hub_height_m = 110
@@ -35,7 +33,6 @@ position_lonlat = [8.612, 56.308]
 # elevation_m = 500
 
 [[turbine]]
-name = "T03"
 model = "medium"
 status = "new"
 hub_height_m = 100
@@ -43,7 +40,6 @@ position_lonlat = [8.598, 56.322]
 # elevation_m = 500
 
 [[turbine]]
-name = "T04"
 model = "small"
 status = "new"
 hub_height_m = 80
@@ -54,14 +50,14 @@ position_lonlat = [8.570, 56.310]
 ####### SPECIFIC RECEIVERS #######
 
 [[receiver]]
-name = "R01"
+# name = "R01"
 position_lonlat = [8.600, 56.300]
 # height_m = 0
 # elevation_m = 1.4
 
 
 [[receiver]]
-name = "R01"
+# name = "R01"
 position_lonlat = [8.601, 56.308]
 # height_m = 8
 # elevation_m = 1.6
