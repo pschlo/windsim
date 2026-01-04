@@ -1,7 +1,7 @@
 import logging
 from .setup_logging import setup_logging
 setup_logging(
-    logging.DEBUG,
+    logging.INFO,
     loggers=[
         "planner"
     ]

@@ -20,51 +20,46 @@ from ..config import ConfigData
 log = logging.getLogger(__name__)
 
 
-@overload
-def _as_fixed_str(obj: xr.DataArray, *, errors: Literal['raise', 'ignore'] = 'raise') -> xr.DataArray: ...
-@overload
-def _as_fixed_str(obj: xr.Dataset, data_vars: Collection[str], *, errors: Literal['raise', 'ignore'] = 'raise') -> xr.Dataset: ...
-def _as_fixed_str(
-    obj: xr.DataArray | xr.Dataset,
-    data_vars: Collection[str] | None = None,
-    *,
-    errors: Literal['raise', 'ignore'] = 'raise'
-) -> xr.DataArray | xr.Dataset:
-    """Pandas stores strings as dtype `object`,
-    but storing them as dtype `str_` with a fixed length is more efficient."""
-    obj = obj.copy()
-    if isinstance(obj, xr.DataArray):
-        return obj.astype(np.str_)
-    else:
-        assert data_vars is not None
-        for data_var in data_vars:
-            if errors == 'ignore' and data_var not in obj:
-                continue
-            obj[data_var] = obj[data_var].astype(np.str_)
-        return obj
+def xr_as_dtype(ds: xr.Dataset, dtypes: dict) -> xr.Dataset:
+    ds = ds.copy()
+
+    # Process existing variables
+    for name, var in ds.variables.items():
+        if name not in dtypes:
+            raise ValueError(f"Unexpected attribute '{name}'")
+        dtype, placeholder = _parse_dtype(dtypes[name])
+
+        # Fill placeholder
+        if placeholder is None:
+            if var.isnull().any():
+                raise ValueError(f"{name} missing for some models")
+        else:
+            var = var.fillna(placeholder)
+
+        # Convert type
+        ds[name] = var.astype(dtype, copy=False)
+
+    # Create missing variables
+    for name in set(dtypes) - set(ds.variables):
+        dtype, placeholder = _parse_dtype(dtypes[name])
+        if placeholder is None:
+            raise ValueError(f"{name} missing for all models")
+        else:
+            ds[name] = placeholder
+
+    assert set(ds.variables) == set(dtypes)
+    return ds
 
 
-@overload
-def _as_dtype(obj: xr.DataArray, dtype: Any, *, errors: Literal['raise', 'ignore'] = 'raise') -> xr.DataArray: ...
-@overload
-def _as_dtype(obj: xr.Dataset, dtype: Any, data_vars: Collection[str], *, errors: Literal['raise', 'ignore'] = 'raise') -> xr.Dataset: ...
-def _as_dtype(
-    obj: xr.DataArray | xr.Dataset,
-    dtype: Any,
-    data_vars: Collection[str] | None = None,
-    *,
-    errors: Literal['raise', 'ignore'] = 'raise'
-) -> xr.DataArray | xr.Dataset:
-    obj = obj.copy()
-    if isinstance(obj, xr.DataArray):
-        return obj.astype(dtype)
+def _parse_dtype(a) -> tuple[Any, Any]:
+    if not isinstance(a, tuple | list):
+        a = (a, None)
+    elif len(a) == 1:
+        a = (a[0], None)
     else:
-        assert data_vars is not None
-        for data_var in data_vars:
-            if errors == 'ignore' and data_var not in obj:
-                continue
-            obj[data_var] = obj[data_var].astype(dtype)
-        return obj
+        a = tuple(a)
+        assert len(a) == 2
+    return a
 
 
 # def environment(asset: assets.GisObjectsJson, working_crs: pyproj.CRS) -> xr.Dataset:

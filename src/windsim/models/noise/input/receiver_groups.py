@@ -18,7 +18,7 @@ from .working_crs import WorkingCrsAsset
 from .area_of_interest import AreaOfInterestAsset
 from .area import AreaAsset, Area
 from .chunksize import ChunksizeAsset, Chunksize
-from ._utils import _as_fixed_str
+from ._utils import xr_as_dtype
 from ..config import ConfigAsset
 from ..config.sections.input import GridReceivers, NormalReceivers
 
@@ -71,15 +71,26 @@ class ReceiverGroupsRecipe(Recipe[ReceiverGroupsAsset]):
 
 
 def get_receivers(asset: assets.ReceiversDict, elevation: xr.DataArray, working_crs: pyproj.CRS, normal_conf: NormalReceivers, aoi: pyproj.aoi.AreaOfInterest, chunksize: Chunksize) -> xr.Dataset:
-    df = (
-        pd.DataFrame(asset.data)
-        .rename(columns=dict(name='receiver'))
-        .set_index('receiver')
-    )
+    df = pd.DataFrame(asset.data)
 
-    # convert to xarray
+    # Convert to xarray
     ds = xr.Dataset.from_dataframe(df)
-    ds = _as_fixed_str(ds, ['receiver'], errors='ignore')
+    ds = xr_as_dtype(ds, dict(
+        index="int",
+        name="str",
+        position_lonlat="object",
+        height_m=("float", np.nan),
+        elevation_m=("float", np.nan)
+    ))
+
+    # Create index
+    ds = (
+        ds
+        .rename(name="receiver")
+        .set_coords("receiver")
+        .swap_dims(index="receiver")
+        .drop_vars("index")
+    )
 
     ds["position_lonlat"] = xr.DataArray(
         data=np.stack(ds["position_lonlat"].values),  # type: ignore
@@ -90,11 +101,14 @@ def get_receivers(asset: assets.ReceiversDict, elevation: xr.DataArray, working_
         },
     )
 
-    # Create variables if they don't exist yet
-    if 'elevation_m' not in ds:
-        ds['elevation_m'] = 'receiver', np.full(ds.sizes['receiver'], np.nan)
-    if 'height_m' not in ds:
-        ds['height_m'] = 'receiver', np.full(ds.sizes['receiver'], np.nan)
+    ds = xr_as_dtype(ds, dict(
+        receiver="str",
+        position_lonlat="float",
+        spatial="str",
+        height_m=("float", np.nan),
+        elevation_m=("float", np.nan)
+    ))
+
 
     # Transform to working CRS
     t = pyproj.Transformer.from_crs(CRS.WGS84, working_crs, always_xy=True, area_of_interest=aoi)
