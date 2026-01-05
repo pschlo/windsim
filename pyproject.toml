@@ -1,6 +1,6 @@
 [project]
 name = "windsim"
-version = "0.1.0"
+version = "1.0.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -8,6 +8,7 @@ dependencies = [
     "cartopy>=0.25.0",
     "cdsapi>=0.7.7",
     "cfgrib>=0.9.15.1",
+    "click>=8.3.1",
     "contextily>=1.7.0",
     "dask[array,complete,dataframe,diagnostics,distributed]>=2025.12.0",
     "geopandas>=1.1.2",
@@ -18,7 +19,7 @@ dependencies = [
     "pandas>=2.3.3",
     "planner",
     "pyproj>=3.7.2",
-    "pyrender>=0.1.45",
+    # "pyrender>=0.1.45",
     "rioxarray>=0.20.0",
     "scipy>=1.16.3",
     "shapely>=2.1.2",
@@ -33,7 +34,7 @@ dependencies = [
 planner = { git = "https://github.com/pschlo/planner" }
 
 [project.scripts]
-windsim = "windsim.cli:main"
+windsim = "windsim.cli:cli"
 
 [build-system]
 requires = ["uv_build>=0.9.18,<0.10.0"]
