@@ -21,9 +21,9 @@ class ReceiversRecipe(Recipe[ReceiversAsset]):
 
     @override
     def make(self):
-        # remove receiver coord and only use relevant datavars
+        # remove name coord and only use relevant datavars
         _receiver_groups_stripped = [
-            g.drop_vars('receiver', errors='ignore')[['position', 'position_lonlat', 'elevation_m', 'height_m']] for g in self.receiver_groups.d.values()
+            g.drop_vars('name', errors='ignore')[['position', 'position_lonlat', 'elevation_m', 'height_m']] for g in self.receiver_groups.d.values()
         ]
 
         if self.receiver_groups.d:

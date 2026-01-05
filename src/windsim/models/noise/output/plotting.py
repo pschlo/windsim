@@ -201,10 +201,12 @@ def plot(
         opts = dict(marker=cast(Any, '.'), s=200, edgecolor='black', zorder=2, transform=working_crs_cartopy)
         cmap = plt.get_cmap('tab10')
         if config.output.map.individual_colors and len(pos) <= cmap.N:
-            if 'receiver' in normal_restructured.coords:
-                labels = list(normal_restructured['receiver'].values)
-            else:
-                labels = [f'IO {i}' for i in range(len(pos))]
+            _c = 0
+            labels = [
+                t if t
+                else f"IO {(_c := _c + 1)}"
+                for t in normal_restructured['name'].values
+            ]
             colors = cmap(np.arange(len(pos)))
             for i in range(len(pos)):
                 ax.scatter(pos[i, 0], pos[i, 1], label=labels[i], color=colors[i], **opts)

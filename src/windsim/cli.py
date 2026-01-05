@@ -3,7 +3,7 @@ from .setup_logging import setup_logging
 setup_logging(
     logging.INFO,
     loggers=[
-        "planner"
+        "planner",
     ]
 )
 from pathlib import Path

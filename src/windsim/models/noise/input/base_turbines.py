@@ -51,8 +51,7 @@ class BaseTurbinesRecipe(Recipe[BaseTurbinesAsset]):
         ds["name"] = ds["name"].broadcast_like(ds["index"])
         ds = (
             ds
-            .rename(name="turbine")
-            .set_coords("turbine")
+            .set_coords("name")
             .swap_dims(index="turbine")
             .drop_vars("index")
         )
@@ -60,14 +59,11 @@ class BaseTurbinesRecipe(Recipe[BaseTurbinesAsset]):
         ds["position_lonlat"] = xr.DataArray(
             data=np.stack(ds["position_lonlat"].values),  # type: ignore
             dims=("turbine", "spatial"),
-            coords=dict(
-                turbine=ds["turbine"],
-                spatial=["x", "y"]
-            ),
+            coords=dict(spatial=["x", "y"]),
         )
 
         ds = xr_as_dtype(ds, dict(
-            turbine="str",
+            name="str",
             model="str",
             status="str",
             spatial="str",

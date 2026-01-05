@@ -42,7 +42,7 @@ class NoiseOutputRecipe(Recipe[NoiseOutputAsset]):
     def make(self):
         """Processes the simulation result. Lazy data will be computed as required."""
         
-        log.debug("Computing results")
+        log.info("Computing results")
         conf = self.config.d
 
         # Just choose what should be calculated and plotted.
@@ -83,11 +83,11 @@ class NoiseOutputRecipe(Recipe[NoiseOutputAsset]):
         ))
 
         _compute_duration = round(time.perf_counter() - _compute_start, conf.time_decimal_places)
-        log.debug(f"Computing results took {_compute_duration} seconds")
+        log.info(f"Computing results took {_compute_duration} seconds")
 
 
         # Process
-        log.debug("Processing computed results")
+        log.info("Processing computed results")
 
         # Restructure and combine the input and result data for further processing
         if 'grid' in self.result.receiver_groups:

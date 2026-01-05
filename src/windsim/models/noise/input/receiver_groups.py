@@ -77,7 +77,7 @@ def get_receivers(asset: assets.ReceiversDict, elevation: xr.DataArray, working_
     ds = xr.Dataset.from_dataframe(df)
     ds = xr_as_dtype(ds, dict(
         index="int",
-        name=("str", "<unnamed>"),
+        name=("str", ""),
         position_lonlat="object",
         height_m=("float", np.nan),
         elevation_m=("float", np.nan)
@@ -87,8 +87,7 @@ def get_receivers(asset: assets.ReceiversDict, elevation: xr.DataArray, working_
     ds["name"] = ds["name"].broadcast_like(ds["index"])
     ds = (
         ds
-        .rename(name="receiver")
-        .set_coords("receiver")
+        .set_coords("name")
         .swap_dims(index="receiver")
         .drop_vars("index")
     )
@@ -96,14 +95,11 @@ def get_receivers(asset: assets.ReceiversDict, elevation: xr.DataArray, working_
     ds["position_lonlat"] = xr.DataArray(
         data=np.stack(ds["position_lonlat"].values),  # type: ignore
         dims=("receiver", "spatial"),
-        coords={
-            "receiver": ds.coords["receiver"],
-            "spatial": ["x", "y"],
-        },
+        coords=dict(spatial=["x", "y"]),
     )
 
     ds = xr_as_dtype(ds, dict(
-        receiver="str",
+        name="str",
         position_lonlat="float",
         spatial="str",
         height_m=("float", np.nan),
