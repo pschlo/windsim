@@ -10,7 +10,7 @@ import re
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 
-from planner import Asset, Recipe, inject
+from planner import Asset, Recipe, inject, store
 
 from windsim.common.data_sources.cerra_heights import run_pipeline, Area
 
@@ -77,8 +77,11 @@ class CerraStoreConfAsset(Asset):
 
 class CerraStoreRecipe(Recipe[CerraStoreAsset]):
     _makes = CerraStoreAsset
-    _dir = "cerra-store"
+    _caps = [
+        store.StorageCap(tag="cerra-store", shared=True)
+    ]
 
+    storage: store.assets.StorageProvider = inject()
     conf: CerraStoreConfAsset = inject()
 
     @override
@@ -92,7 +95,7 @@ class CerraStoreRecipe(Recipe[CerraStoreAsset]):
         else:
             a = self.conf.area
             area_name = f"area(x=[{a['xmin']}-{a['xmax']}],y=[{a['ymin']}-{a['ymax']}])"
-        area_folder = self.workdir / area_name
+        area_folder = self.storage.get_persistent() / area_name
         area_folder.mkdir(exist_ok=True)
 
         # in the area folder, check for missing years/months

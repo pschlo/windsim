@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from planner import Planner, StaticRecipe, RecipeBundle
+from planner import Planner, StaticRecipe, RecipeBundle, store
 
 from windsim.common import assets as common_assets, recipes as common_recipes
 from windsim.models.noise import assets as noise_assets, recipes as noise_recipes
@@ -9,6 +9,8 @@ from .config import Config
 
 
 RECIPE_BUNDLE = RecipeBundle([
+    store.recipes.StorageProvider,
+
     common_recipes.TurbinesDict,
     common_recipes.TurbineModelsDict,
     common_recipes.Fabdem,
@@ -57,6 +59,10 @@ def run_simulation(root: Path | str, project: str, config_path: Path | str | Non
             memory_per_worker=config.computation.memory_per_worker,
             dashboard_address=config.computation.dashboard_address
         )))
+        .add(StaticRecipe(store.assets.StorageConf(
+            root=root,
+            project=project
+        )),)
         .plan(
             noise_assets.NoiseOutput,
             root=root,

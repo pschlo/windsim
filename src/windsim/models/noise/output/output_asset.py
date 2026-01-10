@@ -8,7 +8,7 @@ from datetime import datetime
 from contextlib import contextmanager
 import time
 
-from planner import Asset, Recipe, DataAsset, inject
+from planner import Asset, Recipe, DataAsset, inject, store
 from ..input import assets as noise_assets
 from ..model import NoiseSimulationAsset
 from . import plotting
@@ -27,8 +27,11 @@ class NoiseOutputAsset(Asset):
 
 class NoiseOutputRecipe(Recipe[NoiseOutputAsset]):
     _makes = NoiseOutputAsset
-    _dir = 'noise_output'
+    _caps = [
+        store.StorageCap(tag="noise_output")
+    ]
 
+    storage: store.assets.StorageProvider = inject()
     cluster: common_assets.DaskCluster = inject()
     config: ConfigAsset = inject()
     result: NoiseSimulationAsset = inject()
@@ -124,7 +127,7 @@ class NoiseOutputRecipe(Recipe[NoiseOutputAsset]):
                 elevation=self.elevation.d,
                 turbines=self.turbines.d,
                 config=conf,
-                folder=self.workdir
+                folder=self.storage.get_persistent()
             )
 
         return NoiseOutputAsset(

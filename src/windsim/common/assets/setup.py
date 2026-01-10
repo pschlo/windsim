@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import Any
 
-from planner import Asset, Recipe, inject, DataAsset
+from planner import Asset, Recipe, inject, DataAsset, store
 import tomllib
 
 
@@ -11,9 +11,13 @@ class SetupAsset(DataAsset[dict[str, Any]]):
 
 class SetupRecipe(Recipe[SetupAsset]):
     _makes = SetupAsset
-    _dir = ""
+    _caps = [
+        store.StorageCap(tag=".")
+    ]
+
+    storage: store.assets.StorageProvider = inject()
 
     def make(self):
-        with open(self.workdir / "setup.toml", 'rb') as f:
+        with open(self.storage.get_persistent() / "setup.toml", 'rb') as f:
             data = tomllib.load(f)
         return SetupAsset(data)

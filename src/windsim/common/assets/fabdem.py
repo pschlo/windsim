@@ -6,7 +6,7 @@ from typing import TypedDict
 import pyproj
 from pathlib import Path
 
-from planner import Asset, Recipe, inject, DataAsset
+from planner import Asset, Recipe, inject, DataAsset, store
 
 from windsim.common.data_sources.fabdem import get_elevation
 
@@ -28,9 +28,11 @@ class FabdemConfAsset(Asset):
 
 class FabdemRecipe(Recipe[FabdemAsset]):
     _makes = FabdemAsset
-    _dir = "fabdem"
-    _shared = True
+    _caps = [
+        store.StorageCap(tag="fabdem", shared=True)
+    ]
 
+    storage: store.assets.StorageProvider = inject()
     config: FabdemConfAsset = inject()
 
     @override
@@ -41,7 +43,7 @@ class FabdemRecipe(Recipe[FabdemAsset]):
             xmax=self.config.xmax,
             ymax=self.config.ymax,
             crs=self.config.crs,
-            folder=self.workdir,
+            folder=self.storage.get_persistent(),
             exact_bounds=self.config.exact_bounds
         )
         elevation.chunk(self.config.chunksize)
