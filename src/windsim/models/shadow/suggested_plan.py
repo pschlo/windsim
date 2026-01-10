@@ -57,7 +57,7 @@ def run_simulation(root: Path | str, project: str, config_path: Path | str | Non
             dashboard_address=config.computation.dashboard_address
         )))
         .add(RECIPE_BUNDLE)
-        .plan(shadow_assets.ShadowResult, root=root, project=project)
+        .plan(shadow_assets.ShadowResult)
     )
 
     with plan.run() as asset:

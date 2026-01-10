@@ -695,8 +695,8 @@ name = "eccodeslib"
 version = "2.44.1.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "eckitlib" },
-    { name = "fckitlib" },
+    { name = "eckitlib", marker = "platform_machine != 'ARM64' or sys_platform != 'win32'" },
+    { name = "fckitlib", marker = "platform_machine != 'ARM64' or sys_platform != 'win32'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/90/fa/b7bd5167025998988ed4497edc1c8c6bdd5edeb253e78def1d0a3e58da15/eccodeslib-2.44.1.8-cp312-cp312-macosx_13_0_arm64.whl", hash = "sha256:6cc50572d12c83aa62256264d4a0cc5842b85c34005d127c611236f3bf651008", size = 8926909, upload-time = "2025-12-09T07:54:30.026Z" },
@@ -752,7 +752,7 @@ name = "embreex"
 version = "2.17.7.post7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy" },
+    { name = "numpy", marker = "platform_machine != 'ARM64' or sys_platform != 'win32'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a7/01/ed299e72f62731be03c383ee4e13191d28afd7e73a8a30012e5b12c61916/embreex-2.17.7.post7-cp312-cp312-macosx_10_13_x86_64.whl", hash = "sha256:b10cddba4cc294122e5a76c6df8b042fcb291b352220ecc72b2d9559fc45c48b", size = 10738000, upload-time = "2025-10-22T20:07:29.599Z" },
@@ -790,7 +790,7 @@ name = "fckitlib"
 version = "0.14.1.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "eckitlib" },
+    { name = "eckitlib", marker = "platform_machine != 'ARM64' or sys_platform != 'win32'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/06/3b/daf2168b61b85038e61503be4a66f6e3a6aaf8ccb5fd1647a35c6ddce271/fckitlib-0.14.1.8-cp312-cp312-macosx_13_0_arm64.whl", hash = "sha256:161e173da71cc11af6bd672d52ef66f4fade9b11dc316c7c8755bb595393bda7", size = 411483, upload-time = "2025-12-09T07:54:39.009Z" },
@@ -1975,8 +1975,8 @@ wheels = [
 
 [[package]]
 name = "planner"
-version = "2.0.0"
-source = { git = "https://github.com/pschlo/planner#00b61a8aa9360c687a0b548421f175b76e714d46" }
+version = "2.1.2"
+source = { git = "https://github.com/pschlo/planner#6f732f3a121bf17d78cdb546c2d8f6420e6500ef" }
 dependencies = [
     { name = "matplotlib" },
     { name = "networkx" },
@@ -3022,7 +3022,7 @@ wheels = [
 
 [[package]]
 name = "windsim"
-version = "1.0.0"
+version = "1.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "cartopy" },

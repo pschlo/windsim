@@ -63,11 +63,7 @@ def run_simulation(root: Path | str, project: str, config_path: Path | str | Non
             root=root,
             project=project
         )),)
-        .plan(
-            noise_assets.NoiseOutput,
-            root=root,
-            project=project
-        )
+        .plan(noise_assets.NoiseOutput)
     )
 
     with plan.run() as asset:
