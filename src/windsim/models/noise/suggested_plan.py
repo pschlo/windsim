@@ -42,13 +42,26 @@ RECIPE_BUNDLE = RecipeBundle([
 ])
 
 
-def run_simulation(root: Path | str, project: str, config_path: Path | str | None = None) -> noise_assets.NoiseOutput:
+def run_simulation(root: Path | str, project: str) -> noise_assets.NoiseOutput:
     """Runs a noise simulation.
 
     Uses the `suggested_recipes` to create a `Plan`, which is then executed.
     """
-    config = Config.load(full_path=config_path).data
 
+    # Load config
+    plan = (
+        Planner()
+        .add(noise_recipes.Config)
+        .add(store.recipes.StorageProvider)
+        .add(StaticRecipe(
+            store.assets.StorageConf(root=root)
+        ))
+        .plan(noise_assets.Config)
+    )
+    with plan.run() as _asset:
+        config = _asset.d
+
+    # Create simulation Plan
     plan = (
         Planner()
         .add(RECIPE_BUNDLE)
@@ -66,5 +79,6 @@ def run_simulation(root: Path | str, project: str, config_path: Path | str | Non
         .plan(noise_assets.NoiseOutput)
     )
 
+    # Run simulation
     with plan.run() as asset:
         return asset

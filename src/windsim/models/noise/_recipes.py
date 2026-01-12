@@ -6,3 +6,4 @@ from .output import (
 )
 
 from .model import NoiseSimulationRecipe as NoiseSimulation
+from .config import ConfigRecipe as Config
