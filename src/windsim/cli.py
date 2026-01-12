@@ -13,7 +13,10 @@ import click
 log = logging.getLogger(__name__)
 
 
-@click.group(context_settings={"help_option_names": ["-h", "--help"]})
+@click.group(context_settings={
+    "help_option_names": ["-h", "--help"],
+    "max_content_width": 120
+})
 def cli():
     """windsim command line interface."""
 
@@ -23,26 +26,23 @@ def cli():
     "-r", "--root",
     type=click.Path(path_type=Path, file_okay=False, dir_okay=True),
     default=lambda: Path.cwd() / "repository",
-    show_default=True,
-    help="Root directory of the repository.",
+    help="Root directory of the data repository.  [default: ./repository]",
 )
 @click.option(
     "-p", "--project",
     type=str,
     default="default",
-    show_default=True,
-    help="Project name.",
+    help="Project name.  [default: default]",
 )
 @click.option(
     "-c", "--config",
     "config_path",
     type=click.Path(path_type=Path, dir_okay=False, file_okay=True),
     default=lambda: Path.cwd() / "config.toml",
-    show_default=True,
-    help="Path to the config TOML file.",
+    help="Path to the config TOML file.  [default: ./config.toml]",
 )
 def noise(root: Path, project: str, config_path: Path):
-    """Run the noise simulation."""
+    """Run a noise simulation."""
     log.info("Starting noise simulation")
     from windsim.models.noise.suggested_plan import run_simulation
 
@@ -56,5 +56,5 @@ def noise(root: Path, project: str, config_path: Path):
 # Placeholder for later:
 @cli.command()
 def shadow():
-    """Run the shadow simulation (not implemented yet)."""
+    """Run a shadow simulation (not implemented yet)."""
     raise click.ClickException("Shadow simulation is not implemented yet.")

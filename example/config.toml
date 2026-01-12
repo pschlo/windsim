@@ -11,12 +11,6 @@
 
 
 [input]
-    # The data repository folder to read from and write to.
-    root_folder = '/resources/testcase_repository'
-
-    # The project name.
-    project = 'foo'
-
     # List of enabled receiver groups. Comment out to disable.
     receivers = [
         'normal',

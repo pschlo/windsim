@@ -22,24 +22,12 @@ class NormalReceivers:
 
 
 class InputSection(Section):
-    root_folder: Path | None
-    project: str | None
     area: area_specs.AreaSpecification
     normal: NormalReceivers | None
     grid: GridReceivers | None
 
     def __init__(self, raw: dict[str, Any]) -> None:
         super().__init__(raw)
-
-        if 'project' in raw:
-            self.project = str(raw['project'])
-        else:
-            self.project = None
-
-        if 'root_folder' in raw:
-            self.root_folder = Path(raw['root_folder'])
-        else:
-            self.root_folder = None
 
         self.area = parse_area(raw['area'])
 
