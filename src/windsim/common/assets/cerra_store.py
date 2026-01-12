@@ -95,7 +95,7 @@ class CerraStoreRecipe(Recipe[CerraStoreAsset]):
         else:
             a = self.conf.area
             area_name = f"area(x=[{a['xmin']}-{a['xmax']}],y=[{a['ymin']}-{a['ymax']}])"
-        area_folder = self.storage.get_persistent() / area_name
+        area_folder = self.storage.persistent_dir() / area_name
         area_folder.mkdir(exist_ok=True)
 
         # in the area folder, check for missing years/months

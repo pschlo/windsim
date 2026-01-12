@@ -43,7 +43,7 @@ class FabdemRecipe(Recipe[FabdemAsset]):
             xmax=self.config.xmax,
             ymax=self.config.ymax,
             crs=self.config.crs,
-            folder=self.storage.get_persistent(),
+            folder=self.storage.persistent_dir(),
             exact_bounds=self.config.exact_bounds
         )
         elevation.chunk(self.config.chunksize)

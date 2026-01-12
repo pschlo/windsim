@@ -127,7 +127,7 @@ class NoiseOutputRecipe(Recipe[NoiseOutputAsset]):
                 elevation=self.elevation.d,
                 turbines=self.turbines.d,
                 config=conf,
-                folder=self.storage.get_persistent()
+                folder=self.storage.persistent_dir()
             )
 
         return NoiseOutputAsset(

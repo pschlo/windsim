@@ -18,6 +18,6 @@ class SetupRecipe(Recipe[SetupAsset]):
     storage: store.assets.StorageProvider = inject()
 
     def make(self):
-        with open(self.storage.get_persistent() / "setup.toml", 'rb') as f:
+        with open(self.storage.persistent_dir() / "setup.toml", 'rb') as f:
             data = tomllib.load(f)
         return SetupAsset(data)
