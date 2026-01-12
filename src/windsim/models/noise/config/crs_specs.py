@@ -3,7 +3,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import pyproj
-import pyproj.aoi
 
 
 class CrsSpecification:

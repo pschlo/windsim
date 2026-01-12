@@ -53,3 +53,5 @@ class DaskClusterRecipe(Recipe[DaskClusterAsset]):
                 yield DaskClusterAsset()
             finally:
                 log.info(f"Shutting down Dask cluster")
+                cluster.close()
+                client.close()

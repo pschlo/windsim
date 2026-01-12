@@ -20,26 +20,26 @@ def cli():
 
 @cli.command()
 @click.option(
-    "--root",
+    "-r", "--root",
     type=click.Path(path_type=Path, file_okay=False, dir_okay=True),
-    default=lambda: Path.cwd() / "resources" / "repository",
+    default=lambda: Path.cwd() / "repository",
     show_default=True,
     help="Root directory of the repository.",
 )
 @click.option(
-    "--project",
+    "-p", "--project",
     type=str,
-    default="foo",
+    default="default",
     show_default=True,
     help="Project name.",
 )
 @click.option(
-    "--config",
+    "-c", "--config",
     "config_path",
     type=click.Path(path_type=Path, dir_okay=False, file_okay=True),
-    default=lambda: Path.cwd() / "noise_config.toml",
+    default=lambda: Path.cwd() / "config.toml",
     show_default=True,
-    help="Path to the noise config TOML file.",
+    help="Path to the config TOML file.",
 )
 def noise(root: Path, project: str, config_path: Path):
     """Run the noise simulation."""

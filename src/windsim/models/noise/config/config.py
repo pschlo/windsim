@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-import toml
+import tomllib
 
 from .exceptions import ConfigError
 from .sections.root import ConfigData
@@ -111,11 +111,11 @@ class Config:
         """Loads the given config file."""
         path = Path(path)
         if path.suffix == ".json":
-            with open(path, "r") as f:
+            with open(path, "rb") as f:
                 raw = json.load(f)
         elif path.suffix == ".toml":
-            with open(path, "r") as f:
-                raw = toml.load(f)
+            with open(path, "rb") as f:
+                raw = tomllib.load(f)
         else:
             msg = "Could not load config: "
             if not path.suffix:
