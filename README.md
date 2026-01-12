@@ -23,9 +23,8 @@ Usage: windsim noise [OPTIONS]
   Run a noise simulation.
 
 Options:
-  -r, --root DIRECTORY  Root directory of the data repository.  [default: ./repository]
+  -r, --root DIRECTORY  Root directory of the data repository.  [default: ./example_repository]
   -p, --project TEXT    Project name.  [default: default]
-  -c, --config FILE     Path to the config TOML file.  [default: ./config.toml]
   -h, --help            Show this message and exit.
 ```
-An example config and data repository is provided in the `example` directory.
+An example data repository is provided with `example_repository`.
