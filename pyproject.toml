@@ -1,7 +1,7 @@
 [project]
 name = "windsim"
 version = "1.2.0"
-description = "Add your description here"
+description = "Wind turbine noise and shadow simulation framework"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -17,7 +17,7 @@ dependencies = [
     "matplotlib-scalebar>=0.9.0",
     "numpy>=2.3.5",
     "pandas>=2.3.3",
-    "planner",
+    "planner @ git+https://github.com/pschlo/planner.git",
     "pyproj>=3.7.2",
     # "pyrender>=0.1.45",
     "rioxarray>=0.20.0",
@@ -29,12 +29,15 @@ dependencies = [
     "xarray[accel,io,parallel,viz]>=2025.12.0",
 ]
 
-[tool.uv.sources]
-planner = { git = "https://github.com/pschlo/planner" }
-
 [project.scripts]
 windsim = "windsim.cli:cli"
 
+[dependency-groups]
+dev = ["pytest>=8.4"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
 [build-system]
-requires = ["uv_build>=0.9.18,<0.10.0"]
+requires = ["uv_build>=0.11.15,<0.12.0"]
 build-backend = "uv_build"

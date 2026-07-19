@@ -1,30 +1,33 @@
-# windsim
+# Windsim
 
-Wind turbine simulation framework.
+Wind turbine noise and shadow simulation framework.
 
-## Installation
-This package is not currently uploaded to PyPI. Install as follows:
+## Run
 
-1. Find your release of choice [here](https://github.com/pschlo/windsim/releases)
-2. Copy the link to `windsim-x.x.x.tar.gz`
-3. Run `python -m pip install {link}`
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and
+[Git](https://git-scm.com/downloads), then run a noise simulation against a data
+repository:
 
-You may also prepend a [direct reference](https://peps.python.org/pep-0440/#direct-references), which might be desirable for a `requirements.txt`.
-
-## Building
-The `.tar.gz` file in a release is the [source distribution](https://packaging.python.org/en/latest/glossary/#term-Source-Distribution-or-sdist), which was created from the source code with `uv build --sdist`. [Built distributions](https://packaging.python.org/en/latest/glossary/#term-Built-Distribution) are not provided.
-
-## Usage
-Run `windsim noise` to start a noise simulation:
+```console
+uvx git+https://github.com/pschlo/windsim.git noise --root path/to/repository
 ```
-$ windsim noise --help
-Usage: windsim noise [OPTIONS]
 
-  Run a noise simulation.
+Append `--help` to see the available commands and options.
 
-Options:
-  -r, --root DIRECTORY  Root directory of the data repository.  [default: ./example_repository]
-  -p, --project TEXT    Project name.  [default: default]
-  -h, --help            Show this message and exit.
+## Example
+
+The included example data is available from a checkout:
+
+```console
+git clone https://github.com/pschlo/windsim.git
+cd windsim
+uv run windsim noise
 ```
-An example data repository is provided with `example_repository`.
+
+## Development
+
+```console
+uv sync --locked
+uv run pytest
+uv build
+```
