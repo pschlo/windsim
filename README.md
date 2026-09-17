@@ -1,15 +1,21 @@
 # windsim
 
-Scalable Python framework for wind turbine noise prediction and mapping.
+**Scalable Python framework for wind turbine noise prediction and mapping.**
 
-Windsim predicts noise at specific receivers and across spatial grids using
-ISO 9613-2 based sound propagation calculations. It combines turbine sound power
-spectra, elevation data, and parallel computation to produce maps and numerical
-results.
+Predict sound pressure levels at specific receivers or across spatial grids using
+ISO 9613-2 based acoustics, turbine sound power spectra, and elevation data.
 
-![Example wind turbine noise map](https://github.com/user-attachments/assets/447cfac7-e605-4c67-b202-8fa01ab86cc7)
+[Quick start](#quick-start) · [Input guide](docs/input-repository.md) · [Thesis](https://ths.rwth-aachen.de/wp-content/uploads/sites/4/thesis_Schlosshan.pdf)
 
-*Example noise simulation output.*
+<p align="center">
+  <a href="https://github.com/user-attachments/assets/447cfac7-e605-4c67-b202-8fa01ab86cc7">
+    <img width="600" src="https://github.com/user-attachments/assets/447cfac7-e605-4c67-b202-8fa01ab86cc7" alt="Example noise map showing turbines, receivers, and predicted sound pressure contours" />
+  </a>
+  <br />
+  <sub>Example noise map: predicted A-weighted sound pressure levels in dB(A).
+    <a href="https://github.com/user-attachments/assets/447cfac7-e605-4c67-b202-8fa01ab86cc7">View full size</a>
+  </sub>
+</p>
 
 ## Highlights
 
