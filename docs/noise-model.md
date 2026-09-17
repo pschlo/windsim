@@ -66,7 +66,9 @@ Section 6 compares the original implementation with WindPRO; Section 7.2
 discusses limitations and future work.
 
 The benchmark scenario uses four turbines and multiple receiver-grid resolutions,
-with barrier attenuation disabled. Reported runtime and agreement results apply
+with barrier attenuation disabled. Sections 6.1–6.2 report 22–108 times faster
+execution than WindPRO for the tested noise scenario and approximately sixfold
+speedup in a separate multicore evaluation. Runtime and agreement results apply
 to that setup and the original implementation. They are not a current-version
 benchmark, field validation, or evidence that every experimental feature is ready
 to use. For new studies, record the source version, input spectra, configuration,

@@ -123,7 +123,7 @@
 
         # Sets the CRS for displaying the map.
         # Without map tiles, the map always uses the computation CRS.
-        # If false, a map with tiles uses the tile CRS (usually Web Mercator), and computation results are transformed to match it.
+        # If false (recommended when using tiles), the map uses the tile CRS (usually Web Mercator), and computation results are transformed to match it.
         # If true, the map uses the computation CRS, and the tiles are transformed to match the computation results.
         use_computation_crs = false
 

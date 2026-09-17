@@ -2,11 +2,10 @@
 
 Scalable Python framework for wind turbine noise prediction and mapping.
 
-Windsim predicts noise at individual receiver locations and across spatial grids
-using ISO 9613-2 based sound propagation calculations. It combines turbine sound
-power spectra, elevation data, and parallel numerical computation to produce
-noise maps and numerical results for analysis and custom Python workflows.
-Shadow simulation is experimental and is not available through the CLI yet.
+Windsim predicts noise at specific receivers and across spatial grids using
+ISO 9613-2 based sound propagation calculations. It combines turbine sound power
+spectra, elevation data, and parallel computation to produce maps and numerical
+results.
 
 ![Example wind turbine noise map](https://github.com/user-attachments/assets/447cfac7-e605-4c67-b202-8fa01ab86cc7)
 
@@ -14,22 +13,15 @@ Shadow simulation is experimental and is not available through the CLI yet.
 
 ## Highlights
 
-- **Point and grid predictions:** calculate sound pressure levels at specific
-  receivers or on a grid with configurable extent, spacing, and height.
-- **Frequency-dependent noise modeling:** supply octave-band turbine sound power
-  spectra, with an option for the German *Interimsverfahren*.
-- **Automatic terrain handling:** download and reuse missing FABDEM elevation
-  tiles, combine them, and reproject them to the simulation's coordinate system.
-- **Wind data utilities:** separate Python workflows retrieve CERRA wind speed,
-  direction, and turbulent kinetic energy at multiple heights and prepare
-  compressed NetCDF datasets. CERRA is not used by the default noise workflow.
-- **Maps and numerical data:** generate PNG maps, export NetCDF datasets, and
-  access labeled Xarray results from Python.
-- **Parallel computation:** configure Dask workers, threads, memory limits, and
-  chunk sizes for larger receiver grids.
-
-See [model assumptions and limitations](docs/noise-model.md) for the scope of the
-calculations and the status of experimental features.
+- **Point and grid predictions** with configurable extent, spacing, and height.
+- **Octave-band acoustics**, including the German *Interimsverfahren* option.
+- **Automatic FABDEM terrain preparation:** download, cache, combine, and reproject
+  elevation tiles. The example's tile is included.
+- **CERRA wind data utilities:** retrieve wind speed, direction, and turbulent
+  kinetic energy and prepare NetCDF datasets through Python, separately from noise
+  simulation. See [data sources](docs/data-sources.md).
+- **PNG maps, NetCDF exports, and labeled Xarray results.**
+- **Parallel Dask computation** with configurable workers and chunk sizes.
 
 ## Quick start
 
@@ -56,22 +48,7 @@ uvx https://github.com/pschlo/windsim/archive/refs/heads/main.zip noise --root p
 
 Append `--help` to see command options. See the [input guide](docs/input-repository.md)
 for NetCDF exports, optional geographic background tiles, and configuration.
-The archive commands follow the rolling `main` branch; use an immutable source
-version and retain the lockfile, inputs, and settings for reproducible work.
-
-## Terrain and wind data
-
-The standard noise workflow automatically prepares FABDEM elevation data for
-the selected area. It reuses existing tiles and downloads missing tile
-collections, then combines, reprojects, and clips the terrain data. The bundled
-example already includes its elevation tile.
-
-The project also includes a CERRA height-level wind data pipeline: retrieve
-monthly GRIB files from Copernicus CDS, select a geographic area, and convert,
-chunk, and compress the results as NetCDF for reuse. These utilities are available
-through Python; wind-dependent acoustics and general weather inputs are not
-integrated into the default noise simulation. See [data sources and processing](docs/data-sources.md)
-for variables, caching, prerequisites, and current boundaries.
+These archive commands follow `main`; pin a source version for repeatable work.
 
 ## Input repository
 
@@ -89,61 +66,37 @@ data-repository/
 ```
 
 `--root` selects the data repository; `--project` selects a project inside it.
-The defaults are `./example_repository` and `default`. The CLI reads a shared
-configuration and a separate setup file for each project. NetCDF exports use
-the configured file-output folder rather than `noise_output/`.
+The defaults are `./example_repository` and `default`.
 
 Start with the [example setup](example_repository/projects/default/setup.toml)
 and [configuration](example_repository/shared/config.toml). The
-[input guide](docs/input-repository.md) explains the supported fields,
-longitude/latitude order, heights, elevations, and sound power spectra.
+[input guide](docs/input-repository.md) explains fields, units, and output paths.
 
 ## Architecture and customization
 
 Windsim uses [Planner](https://github.com/pschlo/planner), also developed by Peter
-Schlosshan, to assemble workflows from assets and recipes. Input preparation,
-terrain loading, simulation, and output generation are separate processing
-stages. Custom Python workflows can supply existing assets or substitute
-providers while preserving the expected data structures.
-
-| Library | Role |
-| --- | --- |
-| Planner | Resolve stage dependencies, assemble execution plans, and manage resources and storage |
-| Xarray | Represent labeled multidimensional inputs and results |
-| Dask | Execute lazy numerical calculations in parallel |
-
-Possible extensions include custom input adapters, terrain providers, and
-exports. These require Python code and explicit provider selection. The
-[customization guide](docs/extending.md) includes a minimal executable example
-and explains the constraints on replacing recipes.
+Schlosshan, to connect assets and recipes for input preparation, terrain,
+simulation, and output. Custom Python workflows can replace providers or add
+input adapters and exports. The [customization guide](docs/extending.md) includes
+an example and explains constraints on replacing recipes.
 
 ## Research background
 
-The original noise implementation, model assumptions, software design, and
-performance evaluation are documented in Peter Schlosshan's bachelor's thesis
-at RWTH Aachen University (November 2024):
+The project originated in Peter Schlosshan's bachelor's thesis at RWTH Aachen
+University (November 2024):
 
 [**Efficient and Scalable Sound Propagation Modeling for Predicting Wind Turbine Noise Immission**](https://ths.rwth-aachen.de/wp-content/uploads/sites/4/thesis_Schlosshan.pdf).
 
-The thesis compares the original implementation with WindPRO. Its tested noise
-scenario ran 22–108 times faster, with barrier attenuation disabled; a separate
-multicore evaluation showed approximately sixfold speedup. These are historical
-results for the configurations in Sections 6.1–6.2, not benchmarks of the current
-version. Agreement with another implementation is not validation against field
-measurements. Use the thesis when citing the methods and original evaluation,
-and identify the software version and inputs when reporting new results.
+It documents the methods, software design, and performance comparisons with
+WindPRO. The [evaluation notes](docs/noise-model.md#research-and-evaluation)
+explain the scope of these historical results.
 
 ## Current scope
 
 Noise prediction is the primary CLI workflow. Shadow and Harmonoise code are
-experimental; barrier inputs are not fully integrated. The default preparation
-uses fixed atmospheric and operating assumptions, and the TA Lärm aggregation
-does not implement the full assessment procedure described in the thesis.
-Output generation computes the selected arrays in memory, so workload size
-still matters when using chunked computation.
-
-See [model assumptions and limitations](docs/noise-model.md) before changing
-acoustic options or interpreting results.
+experimental; barrier inputs are incomplete. The default workflow uses fixed
+atmospheric and operating assumptions. See [model assumptions and limitations](docs/noise-model.md)
+before interpreting results.
 
 ## Development
 
@@ -153,7 +106,4 @@ uv run python -m pytest
 uv build
 ```
 
-Planner is installed from its rolling `main` archive, with an artifact hash in
-the lockfile. Run `uv lock --refresh-package planner` to deliberately refresh
-that dependency. See [customization](docs/extending.md) before changing the
-default recipe bundle.
+See [customization](docs/extending.md) for dependency and workflow details.

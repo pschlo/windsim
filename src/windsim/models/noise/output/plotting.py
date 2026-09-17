@@ -85,6 +85,7 @@ def plot(
         )
         width = working_crs_cartopy.bounds[1] - working_crs_cartopy.bounds[0]
         height = working_crs_cartopy.bounds[3] - working_crs_cartopy.bounds[2]
+        # Match Cartopy's default tolerance for projections with known bounds.
         working_crs_cartopy.threshold = min(width, height) / 100
     if tiler is None or config.output.map.use_computation_crs:
         map_crs_pyproj = working_crs

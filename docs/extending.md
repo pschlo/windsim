@@ -97,3 +97,7 @@ An asset's type alone does not describe its full data contract. Preserve the
 expected dictionary fields, dimensions, coordinates, units, and eager/lazy data
 behavior, and inspect downstream consumers when replacing a stage. Verify a
 custom workflow against the dependency versions in the checkout's lockfile.
+
+Planner is installed from its rolling `main` archive, with an artifact hash in
+the lockfile. Run `uv lock --refresh-package planner` to deliberately refresh
+that dependency.
