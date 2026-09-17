@@ -1,6 +1,8 @@
-# Windsim
 
+# windsim
 Wind turbine noise and shadow simulation framework.
+
+<div align="left"><img width="500" alt="windsim icon 3" src="https://github.com/user-attachments/assets/447cfac7-e605-4c67-b202-8fa01ab86cc7" /></div>
 
 ## Run
 
