@@ -98,6 +98,6 @@ expected dictionary fields, dimensions, coordinates, units, and eager/lazy data
 behavior, and inspect downstream consumers when replacing a stage. Verify a
 custom workflow against the dependency versions in the checkout's lockfile.
 
-Planner is installed from its rolling `main` archive, with an artifact hash in
-the lockfile. Run `uv lock --refresh-package planner` to deliberately refresh
-that dependency.
+Planner is pinned to a tested [source commit](https://github.com/pschlo/planner/tree/3105d25ade9d2f390ac1a3eeb58ed7257ab5f58b),
+with its archive hash in the lockfile. To upgrade, change the commit in the
+dependency URL in `pyproject.toml`, run `uv lock`, and verify the workflow.

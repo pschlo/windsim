@@ -1985,12 +1985,12 @@ wheels = [
 [[package]]
 name = "planner"
 version = "2.2.0"
-source = { url = "https://github.com/pschlo/planner/archive/refs/heads/main.zip" }
+source = { url = "https://github.com/pschlo/planner/archive/3105d25ade9d2f390ac1a3eeb58ed7257ab5f58b.zip" }
 dependencies = [
     { name = "matplotlib" },
     { name = "networkx" },
 ]
-sdist = { hash = "sha256:fd7d7e94be640be46f8228d399c031242c63cbba1e332f6edc6a92f4d7a2eb1c" }
+sdist = { hash = "sha256:60cf42509577b1d2246579d426c5554a34cbdab0fb89fb388d0e309e6a30430e" }
 
 [package.metadata]
 requires-dist = [
@@ -3099,7 +3099,7 @@ requires-dist = [
     { name = "matplotlib-scalebar", specifier = ">=0.9.0" },
     { name = "numpy", specifier = ">=2.3.5" },
     { name = "pandas", specifier = ">=2.3.3" },
-    { name = "planner", url = "https://github.com/pschlo/planner/archive/refs/heads/main.zip" },
+    { name = "planner", url = "https://github.com/pschlo/planner/archive/3105d25ade9d2f390ac1a3eeb58ed7257ab5f58b.zip" },
     { name = "pyproj", specifier = ">=3.7.2" },
     { name = "rioxarray", specifier = ">=0.20.0" },
     { name = "scipy", specifier = ">=1.16.3" },
