@@ -128,7 +128,7 @@
 
         # Configuration of Stadia map tiles (https://stadiamaps.com). API key and zoom are required.
         [output.map.tiles]
-            api_key = '10e50479-933d-4902-8559-15fdac40c420'
+            api_key = 'YOUR_STADIA_MAPS_API_KEY'
             zoom = 13
             style = 'stamen_toner_lite'
             double_resolution = true

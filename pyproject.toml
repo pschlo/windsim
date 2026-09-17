@@ -1,7 +1,7 @@
 [project]
 name = "windsim"
 version = "1.2.0"
-description = "Wind turbine noise and shadow simulation framework"
+description = "Scalable Python framework for wind turbine noise prediction and mapping"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
