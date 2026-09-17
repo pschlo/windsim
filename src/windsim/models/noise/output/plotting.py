@@ -65,17 +65,30 @@ def plot(
     # })
 
     tileconf = config.output.map.tiles
-    tiler = cimgt.StadiaMapsTiles(
-        style=tileconf.style,
-        resolution='@2x' if tileconf.double_resolution else '',
-        apikey=tileconf.api_key)
+    tiler = None
+    if tileconf is not None:
+        tiler = cimgt.StadiaMapsTiles(
+            style=tileconf.style,
+            resolution='@2x' if tileconf.double_resolution else '',
+            apikey=tileconf.api_key)
 
     # define coordinate reference systems
     working_crs_pyproj = working_crs
     working_crs_cartopy = ccrs.Projection(working_crs)
-    if config.output.map.use_computation_crs:
+    if working_crs_cartopy.bounds is None:
+        # Custom projections have no global area of use. Bound the map to
+        # the requested view so Cartopy can construct its axes boundary.
+        buffer = config.output.map.buffer
+        working_crs_cartopy.bounds = (
+            area.botleft[0] - buffer, area.topright[0] + buffer,
+            area.botleft[1] - buffer, area.topright[1] + buffer,
+        )
+        width = working_crs_cartopy.bounds[1] - working_crs_cartopy.bounds[0]
+        height = working_crs_cartopy.bounds[3] - working_crs_cartopy.bounds[2]
+        working_crs_cartopy.threshold = min(width, height) / 100
+    if tiler is None or config.output.map.use_computation_crs:
         map_crs_pyproj = working_crs
-        map_crs_cartopy = ccrs.Projection(working_crs)
+        map_crs_cartopy = working_crs_cartopy
     else:
         map_crs_cartopy = tiler.crs
         map_crs_pyproj = pyproj.CRS.from_user_input(tiler.crs)
@@ -92,7 +105,8 @@ def plot(
         area.topright[1] + buffer,
     ], crs=working_crs_cartopy)
 
-    ax.add_image(tiler, tileconf.zoom)
+    if tiler is not None and tileconf is not None:
+        ax.add_image(tiler, tileconf.zoom)
 
     if grid_restructured is not None:
         # DEBUG: add WindPRO contour lines

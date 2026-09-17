@@ -1,9 +1,6 @@
-
 # windsim
 
 Scalable Python framework for wind turbine noise prediction and mapping.
-
-<div align="left"><img width="240" alt="Windsim logo" src="https://github.com/user-attachments/assets/447cfac7-e605-4c67-b202-8fa01ab86cc7" /></div>
 
 Windsim predicts noise at individual receiver locations and across spatial grids
 using ISO 9613-2 based sound propagation calculations. It combines turbine sound
@@ -11,11 +8,9 @@ power spectra, elevation data, and parallel numerical computation to produce
 noise maps and numerical results for analysis and custom Python workflows.
 Shadow simulation is experimental and is not available through the CLI yet.
 
-![Example noise map showing four turbines, three specific receivers, and predicted sound pressure levels](example_repository/projects/default/noise_output/output.png)
+![Example wind turbine noise map](https://github.com/user-attachments/assets/447cfac7-e605-4c67-b202-8fa01ab86cc7)
 
-*Illustrative output from the bundled scenario: colored areas show predicted
-A-weighted sound pressure levels in dB(A); labeled points show specific receiver
-values. The turbine specifications in the example are illustrative.*
+*Example noise simulation output.*
 
 ## Highlights
 
@@ -23,9 +18,11 @@ values. The turbine specifications in the example are illustrative.*
   receivers or on a grid with configurable extent, spacing, and height.
 - **Frequency-dependent noise modeling:** supply octave-band turbine sound power
   spectra, with an option for the German *Interimsverfahren*.
-- **Geospatial preparation:** transform coordinates and use FABDEM elevation
-  data to position turbines and receivers; missing elevation tiles are downloaded
-  and stored for reuse.
+- **Automatic terrain handling:** download and reuse missing FABDEM elevation
+  tiles, combine them, and reproject them to the simulation's coordinate system.
+- **Wind data utilities:** separate Python workflows retrieve CERRA wind speed,
+  direction, and turbulent kinetic energy at multiple heights and prepare
+  compressed NetCDF datasets. CERRA is not used by the default noise workflow.
 - **Maps and numerical data:** generate PNG maps, export NetCDF datasets, and
   access labeled Xarray results from Python.
 - **Parallel computation:** configure Dask workers, threads, memory limits, and
@@ -36,48 +33,45 @@ calculations and the status of experimental features.
 
 ## Quick start
 
-Requires Python 3.12 or newer. Install
-[uv](https://docs.astral.sh/uv/getting-started/installation/), then download and
-extract the [source archive](https://github.com/pschlo/windsim/archive/refs/heads/main.zip).
-Open a terminal in the extracted directory.
-
-The bundled example contains four illustrative turbines, three specific
-receivers, and a receiver grid. To run it without a map-provider account, edit
-`example_repository/shared/config.toml` and change the existing `[output]`
-section's `assets` value to:
-
-```toml
-assets = ['file']
-```
-
-Then run:
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/), download
+and extract the [source archive](https://github.com/pschlo/windsim/archive/refs/heads/main.zip),
+then run this command in the extracted directory:
 
 ```console
 uv run windsim noise
 ```
 
-The example's file settings write timestamped `specific-receivers_export_*.nc`
-and `grid-receivers_export_*.nc` files to `output/` in the current working
-directory. To generate a map instead, use `assets = ['map']` and replace the
-placeholder in `[output.map.tiles]` with your own Stadia Maps API key. The map
-is saved to `example_repository/projects/default/noise_output/output.png`.
-Use `assets = ['map', 'file']` for both outputs.
+This runs the bundled example and saves a noise map to
+`example_repository/projects/default/noise_output/output.png`. No map-provider
+account or configuration edits are needed. uv installs the dependencies and can
+download Python 3.12 or newer if needed.
 
-The example includes an elevation tile. Other areas may require an initial
-download of additional FABDEM tile collections; map output also needs network
-access to its tile provider. See [the input guide](docs/input-repository.md) for
-settings, units, output paths, and inspecting the exported data.
+### Your own data
 
-To use an existing data repository without downloading the source archive:
+With a prepared data repository, install and run directly from GitHub:
 
 ```console
 uvx https://github.com/pschlo/windsim/archive/refs/heads/main.zip noise --root path/to/data-repository --project my-project
 ```
 
-Append `--help` to see command options. The archive commands follow the rolling
-`main` branch. For reproducible work, retain the source version, lockfile, input
-files, and settings used for a run; use an immutable source version for repeat
-installations.
+Append `--help` to see command options. See the [input guide](docs/input-repository.md)
+for NetCDF exports, optional geographic background tiles, and configuration.
+The archive commands follow the rolling `main` branch; use an immutable source
+version and retain the lockfile, inputs, and settings for reproducible work.
+
+## Terrain and wind data
+
+The standard noise workflow automatically prepares FABDEM elevation data for
+the selected area. It reuses existing tiles and downloads missing tile
+collections, then combines, reprojects, and clips the terrain data. The bundled
+example already includes its elevation tile.
+
+The project also includes a CERRA height-level wind data pipeline: retrieve
+monthly GRIB files from Copernicus CDS, select a geographic area, and convert,
+chunk, and compress the results as NetCDF for reuse. These utilities are available
+through Python; wind-dependent acoustics and general weather inputs are not
+integrated into the default noise simulation. See [data sources and processing](docs/data-sources.md)
+for variables, caching, prerequisites, and current boundaries.
 
 ## Input repository
 

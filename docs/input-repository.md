@@ -112,9 +112,9 @@ determined by Dask. Numerical computation uses a local Dask cluster in the
 standard workflow. See [the model guide](noise-model.md) before enabling
 experimental acoustic options.
 
-## Outputs and map credentials
+## Outputs and optional map backgrounds
 
-For numerical exports without map tiles, change the existing `[output]`
+For numerical exports, change the existing `[output]`
 section's `assets` setting to `['file']`. Set `output.file.folder` to your
 desired destination. Relative file-output paths resolve from the **current
 working directory**, not the data repository. Its parent directory must exist.
@@ -125,12 +125,18 @@ the selected main result (`L_AT_LT`, or `L_r` when TA Lärm is enabled).
 The specific-receiver dataset also includes receiver positions and names.
 
 Map output writes `projects/<project>/noise_output/output.png`, replacing the
-previous map for that project. It requires a Stadia Maps API key configured in
-`output.map.tiles.api_key`. Replace the example placeholder in your local data
-repository; keep credentials out of shared source files and version control.
-Map tiles require network access. Missing terrain tiles are downloaded as
+previous map for that project. Without an `[output.map.tiles]` table, it uses
+the computation CRS and renders without external background tiles or credentials.
+The bundled example uses this mode, so `uv run windsim noise` produces a map
+without configuration edits.
+
+To add geographic background tiles, uncomment the example's
+`[output.map.tiles]` table and supply your own Stadia Maps key in `api_key`.
+Keep credentials out of shared source files and version control. Background
+tiles require network access. Missing terrain tiles are downloaded as
 FABDEM tile collections and stored under `shared/fabdem/`; downloads may be
-substantially larger than the simulated area.
+substantially larger than the simulated area. See [data sources](data-sources.md)
+for terrain preparation and the separate CERRA wind data pipeline.
 
 From a source checkout, start Python with `uv run python` and inspect a NetCDF
 result with:

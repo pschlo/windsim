@@ -23,7 +23,7 @@ class OutputMapSection(Section):
     indicate_input_area: bool
     contour_line_visibility: float
     contour_fill_visibility: float
-    tiles: MapTilesConfig
+    tiles: MapTilesConfig | None
     contour_levels: float | list[float]
     add_contour_labels: bool
     add_receiver_labels: bool
@@ -39,7 +39,8 @@ class OutputMapSection(Section):
         self.contour_fill_visibility = raw.get('contour_fill_visibility', 0)
         self.individual_colors = raw['individual_colors']
         self.use_computation_crs = raw['use_computation_crs']
-        self.tiles = MapTilesConfig(**raw['tiles'])
+        tiles = raw.get('tiles')
+        self.tiles = MapTilesConfig(**tiles) if tiles is not None else None
 
         r = raw['contour_levels']
         if isinstance(r, dict):
@@ -79,4 +80,3 @@ class OutputSection(Section):
             self.file = OutputFileSection(raw['file'])
         else:
             self.file = None
-

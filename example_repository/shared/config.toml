@@ -122,16 +122,19 @@
         individual_colors = true
 
         # Sets the CRS for displaying the map.
-        # If false (recommended), the map uses the tile CRS (usually Web Mercator), and computation results are transformed to match it.
+        # Without map tiles, the map always uses the computation CRS.
+        # If false, a map with tiles uses the tile CRS (usually Web Mercator), and computation results are transformed to match it.
         # If true, the map uses the computation CRS, and the tiles are transformed to match the computation results.
         use_computation_crs = false
 
-        # Configuration of Stadia map tiles (https://stadiamaps.com). API key and zoom are required.
-        [output.map.tiles]
-            api_key = 'YOUR_STADIA_MAPS_API_KEY'
-            zoom = 13
-            style = 'stamen_toner_lite'
-            double_resolution = true
+        # Optional background tiles from Stadia Maps (https://stadiamaps.com).
+        # The example generates a noise map without tiles or an API key.
+        # Uncomment this table and supply your own key to add a geographic background.
+        # [output.map.tiles]
+        #     api_key = 'YOUR_STADIA_MAPS_API_KEY'
+        #     zoom = 13
+        #     style = 'stamen_toner_lite'
+        #     double_resolution = true
 
 
 
