@@ -97,6 +97,11 @@ It documents the methods, software design, and performance comparisons with
 WindPRO. The [evaluation notes](docs/noise-model.md#research-and-evaluation)
 explain the scope of these historical results.
 
+A later [DAGA 2026 paper by Theers et al.](https://pub.dega-akustik.de/DAGA_2026/files/upload/paper/659.pdf)
+cites the thesis's iterative convex-hull algorithm for lateral barrier diffraction,
+using it first in their hybrid solver and adding a fallback for cases the
+algorithm cannot solve.
+
 ## Current scope
 
 Noise prediction is the primary CLI workflow. Shadow and Harmonoise code are
