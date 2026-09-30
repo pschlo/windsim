@@ -86,6 +86,10 @@ simulation, and output. Custom Python workflows can replace providers or add
 input adapters and exports. The [customization guide](docs/extending.md) includes
 an example and explains constraints on replacing recipes.
 
+<p align="center">
+  <img width="900" src="docs/images/architecture.svg" alt="Windsim workflow: Planner connects data loading, input preparation, Xarray and Dask acoustic calculation, and map or data exports" />
+</p>
+
 ## Research background
 
 The project originated in Peter Schlosshan's bachelor's thesis at RWTH Aachen

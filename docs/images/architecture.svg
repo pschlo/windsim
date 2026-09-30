@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 560" role="img" aria-labelledby="title description">
+  <title id="title">Windsim noise simulation architecture</title>
+  <desc id="description">Planner connects four stages: loading configuration, turbine spectra, and FABDEM terrain; preparing projected coordinates, heights, and receivers; calculating ISO 9613-2 acoustics with labeled Xarray dimensions and chunked Dask execution; and exporting receiver values, a PNG noise map, and NetCDF data.</desc>
+
+  <defs>
+    <linearGradient id="planner-gradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#482878"/>
+      <stop offset="0.52" stop-color="#2a788e"/>
+      <stop offset="1" stop-color="#22a884"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#1f2328" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0 9 4.5 0 9Z" fill="#57606a"/>
+    </marker>
+    <style>
+      .text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; fill: #1f2328; }
+      .card { fill: #ffffff; stroke: #d0d7de; stroke-width: 2; }
+      .stage { font-size: 25px; font-weight: 700; }
+      .body { font-size: 18px; }
+      .detail { font-size: 16px; fill: #57606a; }
+      .label { font-size: 15px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+      .rule { stroke: #d8dee4; stroke-width: 1.5; }
+      .icon-stroke { fill: none; stroke: #24292f; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="560" rx="24" fill="#f6f8fa"/>
+
+  <text class="text" x="64" y="49" font-size="27" font-weight="700">Default noise workflow</text>
+  <text class="text detail" x="1216" y="48" text-anchor="end">Extensible through custom recipes</text>
+
+  <rect x="64" y="72" width="1152" height="72" rx="16" fill="url(#planner-gradient)"/>
+  <g transform="translate(88 91)">
+    <circle cx="14" cy="17" r="10" fill="none" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="46" cy="17" r="10" fill="none" stroke="#ffffff" stroke-width="3"/>
+    <circle cx="78" cy="17" r="10" fill="none" stroke="#ffffff" stroke-width="3"/>
+    <path d="M24 17H36M56 17H68" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <text x="194" y="106" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#ffffff">Planner</text>
+  <text x="194" y="130" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" fill="#ffffff">resolves asset dependencies and executes the recipes connecting every stage</text>
+
+  <path d="M326 328H350" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M608 328H632" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M890 328H914" stroke="#57606a" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <g transform="translate(64 176)" filter="url(#shadow)">
+    <rect class="card" width="250" height="310" rx="16"/>
+    <path d="M16 0H234A16 16 0 0 1 250 16V24H0V16A16 16 0 0 1 16 0Z" fill="#482878"/>
+    <circle cx="31" cy="57" r="17" fill="#ede7f6"/>
+    <text class="text" x="31" y="63" font-size="17" font-weight="700" text-anchor="middle">1</text>
+    <text class="text stage" x="59" y="65">Load data</text>
+    <line class="rule" x1="24" y1="87" x2="226" y2="87"/>
+
+    <g transform="translate(25 111)">
+      <path class="icon-stroke" d="M3 1H18L24 7V29H3Z M18 1V7H24"/>
+      <text class="text body" x="38" y="12">Configuration</text>
+      <text class="text detail" x="38" y="33">config.toml · setup.toml</text>
+    </g>
+    <g transform="translate(25 174)">
+      <path class="icon-stroke" d="M3 27V17M10 27V8M17 27V13M24 27V3"/>
+      <text class="text body" x="38" y="12">Turbine spectra</text>
+      <text class="text detail" x="38" y="33">octave-band sound power</text>
+    </g>
+    <g transform="translate(25 237)">
+      <path class="icon-stroke" d="M2 25 9 13l6 7 6-13 7 18Z"/>
+      <text class="text body" x="38" y="12">FABDEM terrain</text>
+      <text class="text detail" x="38" y="33">downloaded and cached</text>
+    </g>
+  </g>
+
+  <g transform="translate(346 176)" filter="url(#shadow)">
+    <rect class="card" width="250" height="310" rx="16"/>
+    <path d="M16 0H234A16 16 0 0 1 250 16V24H0V16A16 16 0 0 1 16 0Z" fill="#2a788e"/>
+    <circle cx="31" cy="57" r="17" fill="#e1f0f4"/>
+    <text class="text" x="31" y="63" font-size="17" font-weight="700" text-anchor="middle">2</text>
+    <text class="text stage" x="59" y="65">Prepare inputs</text>
+    <line class="rule" x1="24" y1="87" x2="226" y2="87"/>
+
+    <g transform="translate(25 108)">
+      <circle class="icon-stroke" cx="15" cy="13" r="9"/>
+      <path class="icon-stroke" d="M15 22V31M5 31H25"/>
+      <text class="text body" x="38" y="12">Project coordinates</text>
+      <text class="text detail" x="38" y="33">choose a working CRS</text>
+    </g>
+    <g transform="translate(25 174)">
+      <path class="icon-stroke" d="M2 27 8 18l6 4 6-13 8 18Z M4 11h20"/>
+      <text class="text body" x="38" y="12">Sample elevation</text>
+      <text class="text detail" x="38" y="33">source and receiver heights</text>
+    </g>
+    <g transform="translate(25 240)">
+      <circle cx="7" cy="8" r="4" fill="#e34a33"/>
+      <circle cx="20" cy="8" r="4" fill="#e34a33"/>
+      <path class="icon-stroke" d="M3 19H24M3 27H24M8 15V30M18 15V30"/>
+      <text class="text body" x="38" y="12">Build receivers</text>
+      <text class="text detail" x="38" y="33">selected points or a grid</text>
+    </g>
+  </g>
+
+  <g transform="translate(628 176)" filter="url(#shadow)">
+    <rect class="card" width="250" height="310" rx="16"/>
+    <path d="M16 0H234A16 16 0 0 1 250 16V24H0V16A16 16 0 0 1 16 0Z" fill="#22a884"/>
+    <circle cx="31" cy="57" r="17" fill="#dff5ed"/>
+    <text class="text" x="31" y="63" font-size="17" font-weight="700" text-anchor="middle">3</text>
+    <text class="text stage" x="59" y="65">Calculate</text>
+    <line class="rule" x1="24" y1="87" x2="226" y2="87"/>
+
+    <text class="text label" x="24" y="118" fill="#1b7c65">Acoustics</text>
+    <text class="text body" x="24" y="144">ISO 9613-2</text>
+    <text class="text detail" x="24" y="166">+ Interimsverfahren option</text>
+
+    <line class="rule" x1="24" y1="184" x2="226" y2="184"/>
+    <g transform="translate(24 202)">
+      <path d="M0 13 16 4l16 9-16 9Z M0 13v18l16 9 16-9V13M16 22v18" fill="#d7f5ef" stroke="#16856d" stroke-width="2" stroke-linejoin="round"/>
+      <text class="text" x="44" y="14" font-size="18" font-weight="700">Xarray</text>
+      <text class="text detail" x="44" y="36">turbine × receiver</text>
+      <text class="text detail" x="44" y="56">× frequency</text>
+    </g>
+    <g transform="translate(24 267)">
+      <rect x="0" y="0" width="13" height="13" rx="2" fill="#fde725" stroke="#7a7010"/>
+      <rect x="17" y="0" width="13" height="13" rx="2" fill="#fde725" stroke="#7a7010"/>
+      <rect x="0" y="17" width="13" height="13" rx="2" fill="#fde725" stroke="#7a7010"/>
+      <rect x="17" y="17" width="13" height="13" rx="2" fill="#fde725" stroke="#7a7010"/>
+      <text class="text" x="44" y="13" font-size="18" font-weight="700">Dask</text>
+      <text class="text detail" x="44" y="34">lazy chunks · local workers</text>
+    </g>
+  </g>
+
+  <g transform="translate(910 176)" filter="url(#shadow)">
+    <rect class="card" width="306" height="310" rx="16"/>
+    <path d="M16 0H290A16 16 0 0 1 306 16V24H0V16A16 16 0 0 1 16 0Z" fill="#fde725"/>
+    <circle cx="31" cy="57" r="17" fill="#fff9bf"/>
+    <text class="text" x="31" y="63" font-size="17" font-weight="700" text-anchor="middle">4</text>
+    <text class="text stage" x="59" y="65">Create outputs</text>
+    <line class="rule" x1="24" y1="87" x2="282" y2="87"/>
+
+    <g transform="translate(25 108)">
+      <circle cx="8" cy="15" r="5" fill="#e34a33"/>
+      <path class="icon-stroke" d="M20 8H56M20 16H48M20 24H53"/>
+      <text class="text body" x="69" y="12">Receiver values</text>
+      <text class="text detail" x="69" y="33">calculated sound levels</text>
+    </g>
+    <g transform="translate(25 174)">
+      <rect x="1" y="1" width="57" height="38" rx="4" fill="#d8efe7" stroke="#24292f" stroke-width="2"/>
+      <path d="M6 31C16 12 26 34 35 17S50 17 54 8" fill="none" stroke="#2a788e" stroke-width="2"/>
+      <path d="M6 36C17 20 25 39 38 25S50 26 54 18" fill="none" stroke="#482878" stroke-width="2"/>
+      <text class="text body" x="69" y="12">Noise map</text>
+      <text class="text detail" x="69" y="33">PNG with contours</text>
+    </g>
+    <g transform="translate(25 240)">
+      <ellipse cx="29" cy="6" rx="27" ry="6" fill="#dfe8f6" stroke="#24292f" stroke-width="2"/>
+      <path class="icon-stroke" d="M2 6V31c0 3 12 6 27 6s27-3 27-6V6M2 19c0 3 12 6 27 6s27-3 27-6"/>
+      <text class="text body" x="69" y="12">NetCDF data</text>
+      <text class="text detail" x="69" y="33">labeled numerical results</text>
+    </g>
+  </g>
+
+  <text class="text detail" x="640" y="532" text-anchor="middle">Custom workflows can replace data providers, preparation steps, or output recipes.</text>
+</svg>
