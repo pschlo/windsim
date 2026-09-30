@@ -87,7 +87,11 @@ input adapters and exports. The [customization guide](docs/extending.md) include
 an example and explains constraints on replacing recipes.
 
 <p align="center">
-  <img width="900" src="docs/images/architecture.svg" alt="Windsim workflow: Planner connects data loading, input preparation, Xarray and Dask acoustic calculation, and map or data exports" />
+  <a href="docs/images/architecture.svg">
+    <img width="900" src="docs/images/architecture.svg" alt="Windsim workflow: Planner connects data loading, input preparation, ISO 9613-2 acoustic calculations with Xarray and Dask, and map or data outputs" />
+  </a>
+  <br />
+  <sub><a href="docs/images/architecture.svg">View full-size diagram</a></sub>
 </p>
 
 ## Research background
